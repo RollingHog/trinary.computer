@@ -21,7 +21,9 @@ trinary.setunws = {
   init: function () {
     trinary.setunws.defaults.core = trinary.setunws.core
   }
-}, trinary.setunws.core = {
+}
+
+trinary.setunws.core = {
   mode: {
     "step-by-step": "-",
     "set-up-code": "-",
@@ -53,41 +55,49 @@ trinary.setunws = {
     p: {
       label: "\u03c6",
       size: 2,
-      value: "++"
+      comment: '',
+      value: "++",
     },
     s: {
       label: "S",
       size: 18,
+      comment: 'регистр результата',
       value: "++++++++++++++++++"
     },
     r: {
       label: "R",
       size: 18,
+      comment: 'регистр множителя',
       value: "++++++++++++++++++"
     },
     f: {
       label: "F",
       size: 5,
+      comment: 'пятиразрядный регистр модификации',
       value: "+++++"
     },
     c: {
       label: "C",
       size: 5,
+      comment: 'пятиразрядный регистр адреса команды',
       value: "+++++"
     },
     k: {
       label: "K",
       size: 9,
+      comment: 'девятиразрядный регистр команды',
       value: "+++++++++"
     },
     w: {
       label: "\u03c9",
       size: 1,
+      comment: 'определяет передачу управления при выполнении команд условного перехода',
       value: "+"
     },
     mb: {
       label: "\u0417\u043e\u043d\u0430 \u041c\u0411",
       size: 4,
+      comment: 'адрес зоны магнитного барабана, к которой было последнее обращение',
       value: "++++"
     }
   },
@@ -361,7 +371,9 @@ trinary.setunws = {
   printer: {
     data: ""
   }
-}, trinary.setunws.console = {
+}
+
+trinary.setunws.console = {
   data: "",
   buffer: "",
   stack: [],
@@ -375,7 +387,9 @@ trinary.setunws = {
   clear: function () {
     trinary.setunws.console.data = "", trinary.setunws.console.stack = []
   }
-}, trinary.setunws.ft = {
+}
+
+trinary.setunws.ft = {
   load: function (e, t) {
     if (isset(e) || (e = 1), 1 == e || 2 == e) {
       if (isset(t)) {
