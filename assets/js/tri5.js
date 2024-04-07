@@ -23,7 +23,9 @@ trinary.setunws = {
   }
 }
 
-trinary.setunws.core = {
+var sws = trinary.setunws
+
+sws.core = {
   mode: {
     "step-by-step": "-",
     "set-up-code": "-",
@@ -373,7 +375,7 @@ trinary.setunws.core = {
   }
 }
 
-trinary.setunws.console = {
+sws.console = {
   data: "",
   buffer: "",
   stack: [],
@@ -382,14 +384,19 @@ trinary.setunws.console = {
   info: console.info,
   pc: 0,
   log: function (e) {
-    trinary.setunws.console.data += e.join(""), trinary.setunws.console.pc != trinary.setunws.processor.pc && (trinary.setunws.console.pc = trinary.setunws.processor.pc, trinary.setunws.console.stack.push(trinary.setunws.console.data), trinary.setunws.console.data = ""), trinary.setunws.console.stack.length > 10 && trinary.setunws.console.stack.shift()
+    sws.console.data += e.join("")
+    sws.console.pc != sws.processor.pc 
+      && (sws.console.pc = sws.processor.pc, 
+    sws.console.stack.push(sws.console.data), 
+    sws.console.data = ""), 
+    sws.console.stack.length > 10 && sws.console.stack.shift()
   },
   clear: function () {
-    trinary.setunws.console.data = "", trinary.setunws.console.stack = []
+    sws.console.data = "", sws.console.stack = []
   }
 }
 
-trinary.setunws.ft = {
+sws.ft = {
   load: function (e, t) {
     if (isset(e) || (e = 1), 1 == e || 2 == e) {
       if (isset(t)) {
@@ -398,18 +405,18 @@ trinary.setunws.ft = {
         t = t.split(" ");
         var i = [];
         if (9 == n)
-          for (var r = 0; r < t.length; r++) i.push(trinary.setunws.ft.tr923(t[r]));
+          for (var r = 0; r < t.length; r++) i.push(sws.ft.tr923(t[r]));
         else
           for (var r = 0; r < t.length; r++) i.push(trinary.core.grow(t[r].substr(0, 9), 9));
-        return trinary.setunws.core.ft[e] = i, i
+        return sws.core.ft[e] = i, i
       }
       console.warn("FT:load. Data empty")
     } else console.error("FT:load. Wrong device id")
   },
   read: function (e) {
     var t = [];
-    if (isset(e) || (e = 1), isset(trinary.setunws.core.ft[e]))
-      for (var n = trinary.setunws.core.ft[e], i = n.length, r = 0; i > r; r++)
+    if (isset(e) || (e = 1), isset(sws.core.ft[e]))
+      for (var n = sws.core.ft[e], i = n.length, r = 0; i > r; r++)
         if (t.push(n.shift()), r >= 53) {
           break
         }
@@ -418,23 +425,23 @@ trinary.setunws.ft = {
   tr923: function (e) {
     return isset(e) ? trinary.core.nonaryToTrinary(e.substr(0, 5)).substr(1) : void console.warn("tr923: empty data")
   }
-}, trinary.setunws.mb = {
+}, sws.mb = {
   write: function (e, t) {
-    isset(t) ? (e = trinary.core.align(e.substr(0, 4), 4), trinary.setunws.core.register.mb.value = e, trinary.setunws.core.mb[e] = t) : console.warn("MB write zone: empty data", arguments.calle)
+    isset(t) ? (e = trinary.core.align(e.substr(0, 4), 4), sws.core.register.mb.value = e, sws.core.mb[e] = t) : console.warn("MB write zone: empty data", arguments.calle)
   },
   read: function (e) {
     var t = [];
-    return isset(e) && isset(trinary.setunws.core.mb[e]) ? (trinary.setunws.core.register.mb.value = e, t = trinary.setunws.core.mb[e]) : console.warn("MB read zone: wrong zone address"), t
+    return isset(e) && isset(sws.core.mb[e]) ? (sws.core.register.mb.value = e, t = sws.core.mb[e]) : console.warn("MB read zone: wrong zone address"), t
   }
-}, trinary.setunws.memory = {
+}, sws.memory = {
   __memory_address_start: -121,
   __memory_address_end: 122,
   read: function (e) {
-    return isset(e) ? trinary.setunws.memory.service.readWriteCell(e) : void console.warn("memory read: empty address")
+    return isset(e) ? sws.memory.service.readWriteCell(e) : void console.warn("memory read: empty address")
   },
   write: function (e, t) {
     if (isset(e)) {
-      if (isset(t)) return trinary.setunws.memory.service.readWriteCell(e, t);
+      if (isset(t)) return sws.memory.service.readWriteCell(e, t);
       console.warn("memory write: empty value")
     } else console.warn("memory write: empty address")
   },
@@ -442,7 +449,7 @@ trinary.setunws.ft = {
     read: function (e) {
       isset(e) || (e = "0");
       for (var t, n, i = trinary.core.trinaryToDecimal(e + "---0"), r = 0, o = []; ;)
-        if (t = trinary.core.align(trinary.core.decimalToTrinary(i), 5), n = isset(trinary.setunws.core.memory[t]) ? trinary.setunws.core.memory[t] : trinary.setunws.memory.service.formater("0"), o.push(n), i += "+" == t.charAt(4) ? 2 : 1, r++, r >= 54) break;
+        if (t = trinary.core.align(trinary.core.decimalToTrinary(i), 5), n = isset(sws.core.memory[t]) ? sws.core.memory[t] : sws.memory.service.formater("0"), o.push(n), i += "+" == t.charAt(4) ? 2 : 1, r++, r >= 54) break;
       return o
     },
     write: function (e, t) {
@@ -451,12 +458,12 @@ trinary.setunws.ft = {
         var n, i, r = trinary.core.trinaryToDecimal(e + "---0"),
           o = 54;
         for (var s in t)
-          if (n = trinary.core.align(trinary.core.decimalToTrinary(r), 5), i = trinary.setunws.memory.service.formater(t[s]), trinary.setunws.core.memory[n] = i, r += "+" == n.charAt(4) ? 2 : 1, o -= 1, 0 >= o) break
+          if (n = trinary.core.align(trinary.core.decimalToTrinary(r), 5), i = sws.memory.service.formater(t[s]), sws.core.memory[n] = i, r += "+" == n.charAt(4) ? 2 : 1, o -= 1, 0 >= o) break
       } else console.warn("Memory write zone: empty data", arguments.callee)
     }
   },
   reset: function () {
-    trinary.setunws.memory.service.writeData()
+    sws.memory.service.writeData()
   },
   service: {
     readWriteCell: function (e, t) {
@@ -469,82 +476,82 @@ trinary.setunws.ft = {
             t = trinary.core.grow(t, 18);
             var a = t.substr(0, 9),
               l = t.substr(9, 9);
-            n = trinary.setunws.memory.service.cell(o, a), i = trinary.setunws.memory.service.cell(s, l)
-          } else n = trinary.setunws.memory.service.cell(o), i = trinary.setunws.memory.service.cell(s);
+            n = sws.memory.service.cell(o, a), i = sws.memory.service.cell(s, l)
+          } else n = sws.memory.service.cell(o), i = sws.memory.service.cell(s);
           t = n + i
-        } else t = trinary.setunws.memory.service.cell(e, t);
+        } else t = sws.memory.service.cell(e, t);
         return t
       }
       console.warn("memory_cell: empty address")
     },
     cell: function (e, t) {
-      return isset(e) && isset(trinary.setunws.core.memory[e]) ? (isset(t) && (trinary.setunws.core.memory[e] = trinary.setunws.memory.service.formater(t)), trinary.setunws.core.memory[e]) : void 0
+      return isset(e) && isset(sws.core.memory[e]) ? (isset(t) && (sws.core.memory[e] = sws.memory.service.formater(t)), sws.core.memory[e]) : void 0
     },
     formater: function (e) {
       return isset(e) || (e = "0"), "number" == typeof e && (e = e.toString()), trinary.core.align(trinary.core.validate(e.substr(0, 9)), 9)
     },
     writeData: function (e) {
       "array" != typeof e && (e = []);
-      for (var t, n, i = trinary.setunws.memory.__memory_address_start; i < trinary.setunws.memory.__memory_address_end; i++) t = trinary.core.align(trinary.core.decimalToTrinary(i), 5), "-" != t.charAt(4) && (n = isset(e[t]) ? e[t] : 0, trinary.setunws.core.memory[t] = trinary.setunws.memory.service.formater(n))
+      for (var t, n, i = sws.memory.__memory_address_start; i < sws.memory.__memory_address_end; i++) t = trinary.core.align(trinary.core.decimalToTrinary(i), 5), "-" != t.charAt(4) && (n = isset(e[t]) ? e[t] : 0, sws.core.memory[t] = sws.memory.service.formater(n))
     }
   }
-}, trinary.setunws.operation = {
+}, sws.operation = {
   boot: function () {
     var e = 1,
-      t = trinary.setunws.core.ft[e];
-    trinary.setunws.operation.reset(), trinary.setunws.core.ft[e] = t;
-    var n = trinary.setunws.ft.read(e);
-    trinary.setunws.memory.zone.write("0", n), trinary.setunws.core.register.c.value = "0000+", trinary.setunws.processor.start()
+      t = sws.core.ft[e];
+    sws.operation.reset(), sws.core.ft[e] = t;
+    var n = sws.ft.read(e);
+    sws.memory.zone.write("0", n), sws.core.register.c.value = "0000+", sws.processor.start()
   },
   reset: function () {
-    trinary.setunws.processor.reset(), trinary.setunws.state.reset(), trinary.setunws.registers.reset(), trinary.setunws.memory.reset(), trinary.setunws.console.clear()
+    sws.processor.reset(), sws.state.reset(), sws.registers.reset(), sws.memory.reset(), sws.console.clear()
   },
   start: function () {
-    trinary.setunws.processor.__stop = !1, "+" == trinary.setunws.core.mode["step-by-step"] ? trinary.setunws.processor.step() : trinary.setunws.processor.start()
+    sws.processor.__stop = !1, "+" == sws.core.mode["step-by-step"] ? sws.processor.step() : sws.processor.start()
   },
   step: function () {
-    trinary.setunws.processor.step()
+    sws.processor.step()
   },
   stop: function () {
-    trinary.setunws.processor.__stop = !0
+    sws.processor.__stop = !0
   },
   setcell: function (e, t) {
-    trinary.setunws.memory.write(e, t)
+    sws.memory.write(e, t)
   },
   stepByStep: {
     on: function () {
-      trinary.setunws.core.mode["step-by-step"] = "+"
+      sws.core.mode["step-by-step"] = "+"
     },
     off: function () {
-      trinary.setunws.core.mode["step-by-step"] = "-"
+      sws.core.mode["step-by-step"] = "-"
     }
   },
   setStopAddress: function (e) {
-    isset(e) ? trinary.setunws.core["stop-at"] = e : console.warn("Action setStopAddress: empty address")
+    isset(e) ? sws.core["stop-at"] = e : console.warn("Action setStopAddress: empty address")
   },
   setModeStepByStep: function (e) {
-    isset(e) ? trinary.setunws.core.mode["step-by-step"] = e : console.warn("Action setModeStepByStep: empty value")
+    isset(e) ? sws.core.mode["step-by-step"] = e : console.warn("Action setModeStepByStep: empty value")
   },
   changeModeSetUpCode: function () {
-    var e = trinary.setunws.core.mode;
+    var e = sws.core.mode;
     return e["set-up-code"] = "+" == e["set-up-code"] ? "-" : "+"
   },
   getModeSetUpCode: function () {
-    return trinary.setunws.core.mode["set-up-code"]
+    return sws.core.mode["set-up-code"]
   },
   setModeCK: function (e) {
-    isset(e) ? trinary.setunws.core.mode["c-k"] = e : console.warn("Action setModeCK: empty value")
+    isset(e) ? sws.core.mode["c-k"] = e : console.warn("Action setModeCK: empty value")
   },
   setModeMbFkVp: function (e) {
-    isset(e) ? trinary.setunws.core.mode["mb-fk-vp"] = e : console.warn("Action setModeMbFkVp: empty value")
+    isset(e) ? sws.core.mode["mb-fk-vp"] = e : console.warn("Action setModeMbFkVp: empty value")
   },
   setCode: function (e) {
-    return isset(e) ? trinary.setunws.core.code = e : void console.warn("Action setCode: empty value")
+    return isset(e) ? sws.core.code = e : void console.warn("Action setCode: empty value")
   },
   execute: function (e) {
-    isset(e) ? (trinary.setunws.core.register.k.value = trinary.core.align(e.substr(0, 9), 9), "+" == trinary.setunws.core.mode["step-by-step"] ? trinary.setunws.core.mode["command-from-panel"] = "+" : (trinary.setunws.processor.decode(), trinary.setunws.processor.execute(), trinary.setunws.processor.start())) : console.warn("Action execute: empty command")
+    isset(e) ? (sws.core.register.k.value = trinary.core.align(e.substr(0, 9), 9), "+" == sws.core.mode["step-by-step"] ? sws.core.mode["command-from-panel"] = "+" : (sws.processor.decode(), sws.processor.execute(), sws.processor.start())) : console.warn("Action execute: empty command")
   }
-}, trinary.setunws.output = {
+}, sws.output = {
   data: null,
   output: function (e) {
     var t = "",
@@ -559,19 +566,19 @@ trinary.setunws.ft = {
           else if ("-0-" === i) t += "\n";
           else {
             if ("---" === i) break;
-            isset(trinary.setunws.core.symbols[i]) && (t += trinary.setunws.core.symbols[i][n])
+            isset(sws.core.symbols[i]) && (t += sws.core.symbols[i][n])
           }
           i = ""
         }
     } else console.warn("Output: empty data", arguments.calle);
-    return trinary.setunws.output.data = t, t
+    return sws.output.data = t, t
   },
   text2code: function (e) {
     isset(e) || (e = "", console.warn("text2code: empty text"));
-    for (var t, n = "", i = 0; i < e.length; i++) t = e[i], isset(trinary.setunws.core.codes[t]) && (n += trinary.setunws.core.codes[t]);
+    for (var t, n = "", i = 0; i < e.length; i++) t = e[i], isset(sws.core.codes[t]) && (n += sws.core.codes[t]);
     return n
   }
-}, trinary.setunws.processor = {
+}, sws.processor = {
   __stop: !1,
   delay: 0,
   pc: 0,
@@ -582,219 +589,219 @@ trinary.setunws.ft = {
     end: null
   },
   start: function () {
-    trinary.setunws.processor.time.start = new Date, trinary.setunws.processor.cycle0()
+    sws.processor.time.start = new Date, sws.processor.cycle0()
   },
   cycle0: function () {
-    trinary.setunws.processor.timer = setTimeout("trinary.setunws.processor.cycle1()", 10)
+    sws.processor.timer = setTimeout("sws.processor.cycle1()", 10)
   },
   cycle1: function () {
-    for (var e = 10; e > 0;) 1 != trinary.setunws.processor.__stop ? (trinary.setunws.processor.cycle(), trinary.setunws.processor.running = !0, trinary.setunws.processor.pc % 10 == 0 && trinary.setunws.ui.update()) : (trinary.setunws.processor.running = !1, trinary.setunws.ui.update(), e = 0), e--;
-    1 != trinary.setunws.processor.__stop && trinary.setunws.processor.cycle0()
+    for (var e = 10; e > 0;) 1 != sws.processor.__stop ? (sws.processor.cycle(), sws.processor.running = !0, sws.processor.pc % 10 == 0 && sws.ui.update()) : (sws.processor.running = !1, sws.ui.update(), e = 0), e--;
+    1 != sws.processor.__stop && sws.processor.cycle0()
   },
   cycle: function () {
-    var e = trinary.setunws.core.register.c.value.charAt(4),
-      t = trinary.setunws.core.register.c.value;
-    if (trinary.setunws.console.log(["<", trinary.setunws.processor.pc, "> ", trinary.core.trinaryToNonary(t), "[", t, "]\xa0(\u03c9):", trinary.setunws.core.register.w.value, " "]), "-" === e) {
-      var n = trinary.setunws.core.register.c.value.substr(0, 4),
+    var e = sws.core.register.c.value.charAt(4),
+      t = sws.core.register.c.value;
+    if (sws.console.log(["<", sws.processor.pc, "> ", trinary.core.trinaryToNonary(t), "[", t, "]\xa0(\u03c9):", sws.core.register.w.value, " "]), "-" === e) {
+      var n = sws.core.register.c.value.substr(0, 4),
         i = n + "0",
         r = n + "+";
-      trinary.setunws.core.register.k.value = trinary.setunws.core.memory[i], trinary.setunws.processor.stop() || (trinary.setunws.processor.decode(), trinary.setunws.processor.execute(), trinary.setunws.processor.execute(), trinary.setunws.core.register.k.value = trinary.setunws.core.memory[r], trinary.setunws.processor.decode(), trinary.setunws.processor.stop() || trinary.setunws.processor.execute())
-    } else trinary.setunws.core.register.k.value = trinary.setunws.core.memory[trinary.setunws.core.register.c.value], trinary.setunws.processor.decode(), trinary.setunws.processor.stop() || trinary.setunws.processor.execute();
+      sws.core.register.k.value = sws.core.memory[i], sws.processor.stop() || (sws.processor.decode(), sws.processor.execute(), sws.processor.execute(), sws.core.register.k.value = sws.core.memory[r], sws.processor.decode(), sws.processor.stop() || sws.processor.execute())
+    } else sws.core.register.k.value = sws.core.memory[sws.core.register.c.value], sws.processor.decode(), sws.processor.stop() || sws.processor.execute();
     var o = "0" === e ? "+" : "+" === e ? "+-" : "++";
-    if (trinary.setunws.core.register.c.value == t) {
+    if (sws.core.register.c.value == t) {
       var s = null;
-      s = "+++++" == trinary.setunws.core.register.c.value ? "----0" : "0++++" == trinary.setunws.core.register.c.value ? "+---0" : "-++++" == trinary.setunws.core.register.c.value ? "0---0" : trinary.core.sum(trinary.setunws.core.register.c.value, o), trinary.setunws.core.register.c.value = trinary.core.align(s, 5)
+      s = "+++++" == sws.core.register.c.value ? "----0" : "0++++" == sws.core.register.c.value ? "+---0" : "-++++" == sws.core.register.c.value ? "0---0" : trinary.core.sum(sws.core.register.c.value, o), sws.core.register.c.value = trinary.core.align(s, 5)
     }
-    t = trinary.setunws.core.register.c.value, trinary.setunws.processor.pc++, trinary.setunws.console.log(["-> ", trinary.core.trinaryToNonary(t), "[", t, "]"])
+    t = sws.core.register.c.value, sws.processor.pc++, sws.console.log(["-> ", trinary.core.trinaryToNonary(t), "[", t, "]"])
   },
   execute: function () {
-    isset(trinary.setunws.processor.commands[trinary.setunws.state.command.code]) ? trinary.setunws.processor.commands[trinary.setunws.state.command.code]() : trinary.setunws.trinary.setunws.console.warn("Processor: execute, wrong command code", p.state.command.code)
+    isset(sws.processor.commands[sws.state.command.code]) ? sws.processor.commands[sws.state.command.code]() : sws.sws.console.warn("Processor: execute, wrong command code", p.state.command.code)
   },
   step: function () {
-    "+" == trinary.setunws.core.mode["command-from-panel"] ? (trinary.setunws.core.mode["command-from-panel"] = "0", trinary.setunws.processor.decode(), trinary.setunws.processor.execute()) : trinary.setunws.processor.cycle(), trinary.setunws.processor.running = !1, trinary.setunws.ui.update()
+    "+" == sws.core.mode["command-from-panel"] ? (sws.core.mode["command-from-panel"] = "0", sws.processor.decode(), sws.processor.execute()) : sws.processor.cycle(), sws.processor.running = !1, sws.ui.update()
   },
   reset: function () {
-    trinary.setunws.processor.__stop = !1, trinary.setunws.processor.pc = 0, trinary.setunws.processor.timer = null, trinary.setunws.processor.running = !1, trinary.setunws.processor.time.start = null, trinary.setunws.processor.time.end = null
+    sws.processor.__stop = !1, sws.processor.pc = 0, sws.processor.timer = null, sws.processor.running = !1, sws.processor.time.start = null, sws.processor.time.end = null
   },
   decode: function () {
-    var e = trinary.core.align(trinary.setunws.core.register.k.value.substr(0, 9), 9);
-    trinary.setunws.state.command.value = e, trinary.setunws.state.command.code = e.substr(5, 3);
+    var e = trinary.core.align(sws.core.register.k.value.substr(0, 9), 9);
+    sws.state.command.value = e, sws.state.command.code = e.substr(5, 3);
     var t = e.substr(8, 1);
-    trinary.setunws.state.command.flag = t;
+    sws.state.command.flag = t;
     var n = e.substr(0, 5),
-      i = trinary.setunws.core.register.f.value;
+      i = sws.core.register.f.value;
     i = trinary.core.tryteMultiplyTrit(i, t);
     var r = trinary.core.sum(n, i);
-    r = trinary.core.align(r, 5), trinary.setunws.state.command.address = r.substr(-5);
-    var o = "+" == trinary.setunws.core.mode["set-up-code"] ? !0 : !1;
-    trinary.setunws.state.keying = o;
-    var s = isset(trinary.setunws.core.code) ? trinary.setunws.core.code : "";
-    trinary.setunws.state.cell = o ? s : trinary.setunws.memory.read(trinary.setunws.state.command.address), trinary.setunws.processor.__stop = !1; {
-      var a = trinary.setunws.processor.tooltip[trinary.setunws.state.command.code];
-      trinary.setunws.core.register.c.value, trinary.setunws.core.register.k.value
+    r = trinary.core.align(r, 5), sws.state.command.address = r.substr(-5);
+    var o = "+" == sws.core.mode["set-up-code"] ? !0 : !1;
+    sws.state.keying = o;
+    var s = isset(sws.core.code) ? sws.core.code : "";
+    sws.state.cell = o ? s : sws.memory.read(sws.state.command.address), sws.processor.__stop = !1; {
+      var a = sws.processor.tooltip[sws.state.command.code];
+      sws.core.register.c.value, sws.core.register.k.value
     }
-    trinary.setunws.console.log([trinary.core.trinaryToNonary(trinary.setunws.state.command.code), " [", trinary.setunws.state.command.code, "] ", a.name, "; ", a.content, " "]), trinary.setunws.console.log(["A:\xa0\xa0", n, "\xa0+\xa0\u03c0\u0444:", trinary.setunws.state.command.flag, "\xa0x\xa0F:", trinary.setunws.core.register.f.value, " "]), trinary.setunws.console.log(["A*:\xa0", trinary.setunws.state.command.address, "\xa0\xa0\xa0\xa00x9:", trinary.core.trinaryToNonary(trinary.setunws.state.command.address), " "]), trinary.setunws.console.log(["(A*):", trinary.setunws.state.cell, "\xa0\xa0\xa00x9:", trinary.core.trinaryToNonary(trinary.setunws.state.cell), " "])
+    sws.console.log([trinary.core.trinaryToNonary(sws.state.command.code), " [", sws.state.command.code, "] ", a.name, "; ", a.content, " "]), sws.console.log(["A:\xa0\xa0", n, "\xa0+\xa0\u03c0\u0444:", sws.state.command.flag, "\xa0x\xa0F:", sws.core.register.f.value, " "]), sws.console.log(["A*:\xa0", sws.state.command.address, "\xa0\xa0\xa0\xa00x9:", trinary.core.trinaryToNonary(sws.state.command.address), " "]), sws.console.log(["(A*):", sws.state.cell, "\xa0\xa0\xa00x9:", trinary.core.trinaryToNonary(sws.state.cell), " "])
   },
   stop: function () {
-    return "-" == trinary.setunws.core.mode["c-k"] && trinary.setunws.core["stop-at"] == trinary.setunws.core.register.c.value ? trinary.setunws.processor.__stop = !0 : "+" == trinary.setunws.core.mode["c-k"] && trinary.setunws.core["stop-at"] == trinary.setunws.state.command.address && ("0" == trinary.setunws.core.mode["mb-fk-vp"] ? trinary.setunws.processor.__stop = !0 : "-" != trinary.setunws.core.mode["mb-fk-vp"] || "-0+" != trinary.setunws.state.command.code && "-0-" != trinary.setunws.state.command.code ? "+" == trinary.setunws.core.mode["mb-fk-vp"] && "-00" == trinary.setunws.state.command.code && (trinary.setunws.processor.__stop = !0) : trinary.setunws.processor.__stop = !0), trinary.setunws.processor.__stop
+    return "-" == sws.core.mode["c-k"] && sws.core["stop-at"] == sws.core.register.c.value ? sws.processor.__stop = !0 : "+" == sws.core.mode["c-k"] && sws.core["stop-at"] == sws.state.command.address && ("0" == sws.core.mode["mb-fk-vp"] ? sws.processor.__stop = !0 : "-" != sws.core.mode["mb-fk-vp"] || "-0+" != sws.state.command.code && "-0-" != sws.state.command.code ? "+" == sws.core.mode["mb-fk-vp"] && "-00" == sws.state.command.code && (sws.processor.__stop = !0) : sws.processor.__stop = !0), sws.processor.__stop
   }
-}, trinary.setunws.processor.commands = {
+}, sws.processor.commands = {
   "+00": function () {
-    trinary.setunws.core.register.s.value = trinary.core.grow(trinary.setunws.state.cell, 18), trinary.setunws.core.register.w.value = trinary.core.sign(trinary.setunws.core.register.s.value), trinary.setunws.console.log(["(S):", trinary.setunws.core.register.s.value, "  (\u03c9):", trinary.setunws.core.register.w.value])
+    sws.core.register.s.value = trinary.core.grow(sws.state.cell, 18), sws.core.register.w.value = trinary.core.sign(sws.core.register.s.value), sws.console.log(["(S):", sws.core.register.s.value, "  (\u03c9):", sws.core.register.w.value])
   },
   "+0+": function () {
-    var e = trinary.setunws.core.register.s.value,
-      t = trinary.core.grow(trinary.setunws.state.cell, 18),
+    var e = sws.core.register.s.value,
+      t = trinary.core.grow(sws.state.cell, 18),
       n = trinary.core.sum(e, t);
-    trinary.setunws.core.register.s.value = trinary.core.align(n.substr(-18), 18), trinary.setunws.core.register.w.value = trinary.core.sign(trinary.setunws.core.register.s.value), trinary.setunws.core.register.p.value = trinary.core.align(n.substr(-20, 2), 2), trinary.setunws.console.log(["(A*):", t, "(S):", e, " (A*)+(S):", n, "  (\u03c9):", trinary.setunws.core.register.w.value]), n.length > 18 && (trinary.setunws.processor.__stop = !0, trinary.setunws.console.warn("Overflow! -> S:", n, " \u03c6:", trinary.setunws.core.register.p.value))
+    sws.core.register.s.value = trinary.core.align(n.substr(-18), 18), sws.core.register.w.value = trinary.core.sign(sws.core.register.s.value), sws.core.register.p.value = trinary.core.align(n.substr(-20, 2), 2), sws.console.log(["(A*):", t, "(S):", e, " (A*)+(S):", n, "  (\u03c9):", sws.core.register.w.value]), n.length > 18 && (sws.processor.__stop = !0, sws.console.warn("Overflow! -> S:", n, " \u03c6:", sws.core.register.p.value))
   },
   "+0-": function () {
-    var e = trinary.core.grow(trinary.setunws.state.cell, 18),
-      t = trinary.setunws.core.register.s.value,
+    var e = trinary.core.grow(sws.state.cell, 18),
+      t = sws.core.register.s.value,
       n = trinary.core.inverse(e),
       i = trinary.core.sum(t, n);
-    trinary.setunws.core.register.s.value = trinary.core.align(i.substr(-18), 18), trinary.setunws.core.register.w.value = trinary.core.sign(trinary.setunws.core.register.s.value), trinary.setunws.core.register.p.value = trinary.core.align(i.substr(-20, 2), 2), trinary.setunws.console.log(["(S):", t, " (A*):", e, " (S)-(A*):", i, " => (S): ", trinary.setunws.core.register.s.value, "  (\u03c9):", trinary.setunws.core.register.w.value]), i.length > 18 && (trinary.setunws.processor.__stop = !0, trinary.setunws.console.warn("Overflow! -> S:", i, " \u03c6:", trinary.setunws.core.register.p.value))
+    sws.core.register.s.value = trinary.core.align(i.substr(-18), 18), sws.core.register.w.value = trinary.core.sign(sws.core.register.s.value), sws.core.register.p.value = trinary.core.align(i.substr(-20, 2), 2), sws.console.log(["(S):", t, " (A*):", e, " (S)-(A*):", i, " => (S): ", sws.core.register.s.value, "  (\u03c9):", sws.core.register.w.value]), i.length > 18 && (sws.processor.__stop = !0, sws.console.warn("Overflow! -> S:", i, " \u03c6:", sws.core.register.p.value))
   },
   "++0": function () {
-    var e = trinary.setunws.core.register.r.value = trinary.setunws.core.register.s.value,
-      t = trinary.core.grow(trinary.setunws.state.cell, 18),
+    var e = sws.core.register.r.value = sws.core.register.s.value,
+      t = trinary.core.grow(sws.state.cell, 18),
       n = trinary.core.align(trinary.core.multiplication(t, e), 36),
       i = n.substr(2, 18),
       r = n.substr(0, 2);
-    trinary.setunws.core.register.s.value = i, trinary.setunws.core.register.w.value = trinary.core.sign(i), trinary.setunws.core.register.p.value = r, trinary.setunws.console.log([" (R):", e, " (A*):", t, " (A*)*(R):", n, " -> S:", i, " (\u03c9):", trinary.setunws.core.register.w.value]), "00" != r && (trinary.setunws.processor.__stop = !0, trinary.setunws.console.warn("Overflow! -> R:", n, " \u03c6:", trinary.setunws.core.register.p.value))
+    sws.core.register.s.value = i, sws.core.register.w.value = trinary.core.sign(i), sws.core.register.p.value = r, sws.console.log([" (R):", e, " (A*):", t, " (A*)*(R):", n, " -> S:", i, " (\u03c9):", sws.core.register.w.value]), "00" != r && (sws.processor.__stop = !0, sws.console.warn("Overflow! -> R:", n, " \u03c6:", sws.core.register.p.value))
   },
   "+++": function () {
-    var e = trinary.setunws.core.register.s.value,
-      t = trinary.core.grow(trinary.setunws.state.cell, 18),
-      n = trinary.setunws.core.register.r.value,
+    var e = sws.core.register.s.value,
+      t = trinary.core.grow(sws.state.cell, 18),
+      n = sws.core.register.r.value,
       i = trinary.core.align(trinary.core.multiplication(t, n), 36),
       r = i.substr(2, 18),
       o = i.substr(0, 2);
-    "00" != o && (trinary.setunws.processor.__stop = !0, trinary.setunws.console.warn("Overflow! -> AR:", i, " \u03c6:", o));
+    "00" != o && (sws.processor.__stop = !0, sws.console.warn("Overflow! -> AR:", i, " \u03c6:", o));
     var s = trinary.core.align(trinary.core.sum(e, r), 20);
-    trinary.setunws.core.register.s.value = trinary.core.align(s.substr(-18), 18), trinary.setunws.core.register.w.value = trinary.core.sign(trinary.setunws.core.register.s.value), trinary.setunws.core.register.p.value = trinary.core.align(s.substr(-20, 2), 2), trinary.setunws.console.log(["(S):", e, " (A*):", t, " (R):", n, " (A*)*(R):", i, " [(A*)*(R)]18:", r, " (S)+(A*)*(R):", s, " (\u03c9):", trinary.setunws.core.register.w.value]), "00" != trinary.setunws.core.register.p.value && (trinary.setunws.processor.__stop = !0, trinary.setunws.console.warn("Overflow! -> S:", s, " \u03c6:", trinary.setunws.core.register.p.value))
+    sws.core.register.s.value = trinary.core.align(s.substr(-18), 18), sws.core.register.w.value = trinary.core.sign(sws.core.register.s.value), sws.core.register.p.value = trinary.core.align(s.substr(-20, 2), 2), sws.console.log(["(S):", e, " (A*):", t, " (R):", n, " (A*)*(R):", i, " [(A*)*(R)]18:", r, " (S)+(A*)*(R):", s, " (\u03c9):", sws.core.register.w.value]), "00" != sws.core.register.p.value && (sws.processor.__stop = !0, sws.console.warn("Overflow! -> S:", s, " \u03c6:", sws.core.register.p.value))
   },
   "++-": function () {
-    var e = trinary.core.grow(trinary.setunws.state.cell, 18),
-      t = trinary.setunws.core.register.s.value,
-      n = trinary.setunws.core.register.r.value,
+    var e = trinary.core.grow(sws.state.cell, 18),
+      t = sws.core.register.s.value,
+      n = sws.core.register.r.value,
       i = trinary.core.align(trinary.core.multiplication(t, n), 36),
       r = i.substr(2, 18),
       o = i.substr(0, 2);
-    "00" != o && (trinary.setunws.processor.__stop = !0, trinary.setunws.console.warn("Overflow! -> SR:", i, " \u03c6:", o));
+    "00" != o && (sws.processor.__stop = !0, sws.console.warn("Overflow! -> SR:", i, " \u03c6:", o));
     var s = trinary.core.align(trinary.core.sum(e, r), 20);
-    trinary.setunws.core.register.s.value = trinary.core.align(s.substr(-18), 18), trinary.setunws.core.register.w.value = trinary.core.sign(trinary.setunws.core.register.s.value), trinary.setunws.core.register.p.value = trinary.core.align(s.substr(-20, 2), 2), trinary.setunws.console.log([" (A*):", e, " (S):", t, " (R):", n, " (S)*(R):", i, " [(S)*(R)]18:", r, " (A*)+(S)*(R):", s, " -> (S):", trinary.setunws.core.register.s.value, " (\u03c9):", trinary.setunws.core.register.w.value]), "00" != o && (trinary.setunws.processor.__stop = !0, trinary.setunws.console.warn("Overflow! -> (A*)+(S)*(R):", s, " \u03c6:", o))
+    sws.core.register.s.value = trinary.core.align(s.substr(-18), 18), sws.core.register.w.value = trinary.core.sign(sws.core.register.s.value), sws.core.register.p.value = trinary.core.align(s.substr(-20, 2), 2), sws.console.log([" (A*):", e, " (S):", t, " (R):", n, " (S)*(R):", i, " [(S)*(R)]18:", r, " (A*)+(S)*(R):", s, " -> (S):", sws.core.register.s.value, " (\u03c9):", sws.core.register.w.value]), "00" != o && (sws.processor.__stop = !0, sws.console.warn("Overflow! -> (A*)+(S)*(R):", s, " \u03c6:", o))
   },
   "+-0": function () {
-    var e = trinary.core.grow(trinary.setunws.state.cell, 18),
-      t = trinary.setunws.core.register.s.value,
-      n = trinary.setunws.core.register.s.value = trinary.core.bitwiseMultiplication(e, t);
-    trinary.setunws.core.register.w.value = trinary.core.sign(trinary.setunws.core.register.s.value), trinary.setunws.console.log(["(A*):", e, " (S):", t, " (A*)x(S):", n, "  (\u03c9):", trinary.setunws.core.register.w.value])
+    var e = trinary.core.grow(sws.state.cell, 18),
+      t = sws.core.register.s.value,
+      n = sws.core.register.s.value = trinary.core.bitwiseMultiplication(e, t);
+    sws.core.register.w.value = trinary.core.sign(sws.core.register.s.value), sws.console.log(["(A*):", e, " (S):", t, " (A*)x(S):", n, "  (\u03c9):", sws.core.register.w.value])
   },
   "+-+": function () {
-    trinary.setunws.core.register.r.value = trinary.core.grow(trinary.setunws.state.cell, 18), trinary.setunws.core.register.w.value = trinary.core.sign(trinary.setunws.core.register.r.value), trinary.setunws.console.log(["(R):", trinary.setunws.core.register.r.value, "  (\u03c9):", trinary.setunws.core.register.w.value])
+    sws.core.register.r.value = trinary.core.grow(sws.state.cell, 18), sws.core.register.w.value = trinary.core.sign(sws.core.register.r.value), sws.console.log(["(R):", sws.core.register.r.value, "  (\u03c9):", sws.core.register.w.value])
   },
   "+--": function () {
-    trinary.setunws.core.register.r.value = trinary.core.grow(trinary.setunws.state.cell, 18), trinary.setunws.core.register.w.value = trinary.core.sign(trinary.setunws.core.register.r.value), trinary.setunws.processor.__stop = !0, trinary.setunws.console.log(["(R):", trinary.setunws.core.register.r.value, " (\u03c9):", trinary.setunws.core.register.w.value]), trinary.setunws.console.log(["STOPED!"])
+    sws.core.register.r.value = trinary.core.grow(sws.state.cell, 18), sws.core.register.w.value = trinary.core.sign(sws.core.register.r.value), sws.processor.__stop = !0, sws.console.log(["(R):", sws.core.register.r.value, " (\u03c9):", sws.core.register.w.value]), sws.console.log(["STOPED!"])
   },
   "0+0": function () {
-    "0" === trinary.setunws.core.register.w.value && (trinary.setunws.core.register.c.value = trinary.setunws.state.command.address, trinary.setunws.console.log(["(C) <- ", trinary.setunws.core.register.c.value]))
+    "0" === sws.core.register.w.value && (sws.core.register.c.value = sws.state.command.address, sws.console.log(["(C) <- ", sws.core.register.c.value]))
   },
   "0++": function () {
-    "+" == trinary.setunws.core.register.w.value && (trinary.setunws.core.register.c.value = trinary.setunws.state.command.address, trinary.setunws.console.log(["(C) <- ", trinary.setunws.core.register.c.value]))
+    "+" == sws.core.register.w.value && (sws.core.register.c.value = sws.state.command.address, sws.console.log(["(C) <- ", sws.core.register.c.value]))
   },
   "0+-": function () {
-    "-" == trinary.setunws.core.register.w.value && (trinary.setunws.core.register.c.value = trinary.setunws.state.command.address, trinary.setunws.console.log(["(C) <- ", trinary.setunws.core.register.c.value]))
+    "-" == sws.core.register.w.value && (sws.core.register.c.value = sws.state.command.address, sws.console.log(["(C) <- ", sws.core.register.c.value]))
   },
   "000": function () {
-    trinary.setunws.core.register.c.value = trinary.setunws.state.command.address, trinary.setunws.console.log(["(C) <- ", trinary.setunws.core.register.c.value])
+    sws.core.register.c.value = sws.state.command.address, sws.console.log(["(C) <- ", sws.core.register.c.value])
   },
   "00+": function () {
-    var e = trinary.setunws.state.command.address,
-      t = trinary.core.grow(trinary.setunws.core.register.c.value, 9);
-    trinary.setunws.memory.write(e, t), trinary.setunws.console.log(["(C):", trinary.setunws.core.register.c.value, " => A*:", e, " (A*):", trinary.setunws.memory.read(e)])
+    var e = sws.state.command.address,
+      t = trinary.core.grow(sws.core.register.c.value, 9);
+    sws.memory.write(e, t), sws.console.log(["(C):", sws.core.register.c.value, " => A*:", e, " (A*):", sws.memory.read(e)])
   },
   "00-": function () {
-    var e = trinary.setunws.state.command.address,
-      t = trinary.core.grow(trinary.setunws.core.register.f.value, 9);
-    trinary.setunws.memory.write(e, t), trinary.setunws.core.register.w.value = trinary.core.sign(t), trinary.setunws.console.log(["(F):", t, " -> A*:", e, " (A*):", trinary.setunws.memory.read(e), " (\u03c9):", trinary.setunws.core.register.w.value])
+    var e = sws.state.command.address,
+      t = trinary.core.grow(sws.core.register.f.value, 9);
+    sws.memory.write(e, t), sws.core.register.w.value = trinary.core.sign(t), sws.console.log(["(F):", t, " -> A*:", e, " (A*):", sws.memory.read(e), " (\u03c9):", sws.core.register.w.value])
   },
   "0-0": function () {
-    var e = trinary.setunws.state.cell.substr(0, 5);
-    trinary.setunws.core.register.f.value = e, trinary.setunws.core.register.w.value = trinary.core.sign(trinary.setunws.core.register.f.value), trinary.setunws.console.log(["(A*):", trinary.setunws.state.cell, "-> F:", e])
+    var e = sws.state.cell.substr(0, 5);
+    sws.core.register.f.value = e, sws.core.register.w.value = trinary.core.sign(sws.core.register.f.value), sws.console.log(["(A*):", sws.state.cell, "-> F:", e])
   },
   "0-+": function () {
-    var e = trinary.setunws.state.cell.substr(0, 5),
-      t = trinary.setunws.core.register.c.value,
+    var e = sws.state.cell.substr(0, 5),
+      t = sws.core.register.c.value,
       n = trinary.core.align(trinary.core.sum(e, t), 5);
-    trinary.setunws.core.register.f.value = n.substr(0, 5), trinary.setunws.core.register.w.value = trinary.core.sign(trinary.setunws.core.register.f.value), trinary.setunws.console.log(["(A*):", e, " (C):", t, " (A*)+(C):", n, " -> (F):", trinary.setunws.core.register.f.value, " (\u03c9):", trinary.setunws.core.register.w.value]), n.length > 5 && trinary.setunws.console.error("overflow:", n)
+    sws.core.register.f.value = n.substr(0, 5), sws.core.register.w.value = trinary.core.sign(sws.core.register.f.value), sws.console.log(["(A*):", e, " (C):", t, " (A*)+(C):", n, " -> (F):", sws.core.register.f.value, " (\u03c9):", sws.core.register.w.value]), n.length > 5 && sws.console.error("overflow:", n)
   },
   "0--": function () {
-    var e = trinary.setunws.core.register.f.value,
-      t = trinary.setunws.state.cell,
+    var e = sws.core.register.f.value,
+      t = sws.state.cell,
       n = trinary.core.align(trinary.core.sum(e, t.substr(0, 5)), 5);
-    trinary.setunws.core.register.f.value = n.substr(0, 5), trinary.setunws.core.register.w.value = trinary.core.sign(trinary.setunws.core.register.f.value), trinary.setunws.console.log(["(F):", e, " (A*):", t, " (F)+(A*):", n, " -> (F):", trinary.setunws.core.register.f.value, " (\u03c9):", trinary.setunws.core.register.w.value]), n.length > 5 && trinary.setunws.console.error("overflow:", n)
+    sws.core.register.f.value = n.substr(0, 5), sws.core.register.w.value = trinary.core.sign(sws.core.register.f.value), sws.console.log(["(F):", e, " (A*):", t, " (F)+(A*):", n, " -> (F):", sws.core.register.f.value, " (\u03c9):", sws.core.register.w.value]), n.length > 5 && sws.console.error("overflow:", n)
   },
   "-+0": function () {
-    var e = trinary.setunws.state.cell.substr(0, 5),
-      t = trinary.setunws.core.register.s.value,
-      n = trinary.core.shift(trinary.setunws.core.register.s.value, e);
-    trinary.setunws.core.register.s.value = trinary.core.align(n, 18), trinary.setunws.core.register.w.value = trinary.core.sign(trinary.setunws.core.register.s.value), trinary.setunws.console.log(["N:", e, " 0x10:", trinary.core.trinaryToDecimal(e), " (S):", t, " -> ", n, " (S):", trinary.setunws.core.register.s.value, " (\u03c9):", trinary.setunws.core.register.w.value])
+    var e = sws.state.cell.substr(0, 5),
+      t = sws.core.register.s.value,
+      n = trinary.core.shift(sws.core.register.s.value, e);
+    sws.core.register.s.value = trinary.core.align(n, 18), sws.core.register.w.value = trinary.core.sign(sws.core.register.s.value), sws.console.log(["N:", e, " 0x10:", trinary.core.trinaryToDecimal(e), " (S):", t, " -> ", n, " (S):", sws.core.register.s.value, " (\u03c9):", sws.core.register.w.value])
   },
   "-++": function () {
-    if (trinary.setunws.state.keying) {
-      var e = trinary.setunws.core.code;
-      trinary.setunws.console.log(["Keying!"]), "-" === trinary.setunws.state.command.address.charAt(4) ? trinary.setunws.memory.write(trinary.setunws.state.command.address, e) : trinary.setunws.memory.write(trinary.setunws.state.command.address, e.substr(0, 9)), trinary.setunws.core.register.w.value = trinary.core.sign(e)
-    } else "-" === trinary.setunws.state.command.address.charAt(4) ? trinary.setunws.memory.write(trinary.setunws.state.command.address, trinary.setunws.core.register.s.value) : trinary.setunws.memory.write(trinary.setunws.state.command.address, trinary.setunws.core.register.s.value.substr(0, 9)), trinary.setunws.core.register.w.value = trinary.core.sign(trinary.setunws.core.register.s.value), trinary.setunws.console.log(["A*:", trinary.setunws.state.command.address, " (S):", trinary.setunws.core.register.s.value, " (A*):", trinary.setunws.memory.read(trinary.setunws.state.command.address), " (\u03c9):", trinary.setunws.core.register.w.value])
+    if (sws.state.keying) {
+      var e = sws.core.code;
+      sws.console.log(["Keying!"]), "-" === sws.state.command.address.charAt(4) ? sws.memory.write(sws.state.command.address, e) : sws.memory.write(sws.state.command.address, e.substr(0, 9)), sws.core.register.w.value = trinary.core.sign(e)
+    } else "-" === sws.state.command.address.charAt(4) ? sws.memory.write(sws.state.command.address, sws.core.register.s.value) : sws.memory.write(sws.state.command.address, sws.core.register.s.value.substr(0, 9)), sws.core.register.w.value = trinary.core.sign(sws.core.register.s.value), sws.console.log(["A*:", sws.state.command.address, " (S):", sws.core.register.s.value, " (A*):", sws.memory.read(sws.state.command.address), " (\u03c9):", sws.core.register.w.value])
   },
   "-+-": function () {
-    var e = trinary.core.normalize(trinary.setunws.core.register.s.value, 18),
+    var e = trinary.core.normalize(sws.core.register.s.value, 18),
       t = e.N,
       n = e.normalize;
-    if (trinary.setunws.console.log(["S:", trinary.setunws.core.register.s.value, " N:", t, " normalize:", n]), "-" === trinary.setunws.state.command.address.charAt(4)) {
+    if (sws.console.log(["S:", sws.core.register.s.value, " N:", t, " normalize:", n]), "-" === sws.state.command.address.charAt(4)) {
       var i = trinary.core.align(n, 18);
-      trinary.setunws.memory.write(trinary.setunws.state.command.address, i)
+      sws.memory.write(sws.state.command.address, i)
     } else {
       var i = n.substr(0, 9);
-      trinary.setunws.memory.write(trinary.setunws.state.command.address, i)
+      sws.memory.write(sws.state.command.address, i)
     }
-    trinary.setunws.core.register.s.value = trinary.core.align(t, 5) + "0000000000000", trinary.setunws.core.register.w.value = trinary.core.sign(trinary.setunws.core.register.s.value), trinary.setunws.console.log(["(A*):", i, " (S):", trinary.setunws.core.register.s.value, " (\u03c9):", trinary.setunws.core.register.w.value])
+    sws.core.register.s.value = trinary.core.align(t, 5) + "0000000000000", sws.core.register.w.value = trinary.core.sign(sws.core.register.s.value), sws.console.log(["(A*):", i, " (S):", sws.core.register.s.value, " (\u03c9):", sws.core.register.w.value])
   },
   "-00": function () {
-    var e = trinary.setunws.state.command.address.charAt(0),
-      t = trinary.setunws.state.command.address.substr(1, 4);
-    if (trinary.setunws.console.log(["code:", t, " zone:", e]), "000+" === t) trinary.setunws.console.log(["FT-1 -> MemBank :", e]), trinary.setunws.memory.zone.write(e, trinary.setunws.ft.read(1));
-    else if ("00+0" === t) trinary.setunws.console.log("FT-2 -> MemBank :", e), trinary.setunws.memory.zone.write(e, trinary.setunws.ft.read(2));
-    else if ("000-" === t) trinary.setunws.console.log(["UNDER CONSTRUCTION"]);
-    else if ("00-0" === t) trinary.setunws.console.log(["UNDER CONSTRUCTION"]);
+    var e = sws.state.command.address.charAt(0),
+      t = sws.state.command.address.substr(1, 4);
+    if (sws.console.log(["code:", t, " zone:", e]), "000+" === t) sws.console.log(["FT-1 -> MemBank :", e]), sws.memory.zone.write(e, sws.ft.read(1));
+    else if ("00+0" === t) sws.console.log("FT-2 -> MemBank :", e), sws.memory.zone.write(e, sws.ft.read(2));
+    else if ("000-" === t) sws.console.log(["UNDER CONSTRUCTION"]);
+    else if ("00-0" === t) sws.console.log(["UNDER CONSTRUCTION"]);
     else if ("0-00" === t) {
-      trinary.setunws.console.log(["PRINTER!"]);
-      var n = trinary.setunws.memory.zone.read(e);
-      trinary.setunws.console.log([n.length]), trinary.setunws.core.printer.data = trinary.setunws.output.output(n)
+      sws.console.log(["PRINTER!"]);
+      var n = sws.memory.zone.read(e);
+      sws.console.log([n.length]), sws.core.printer.data = sws.output.output(n)
     }
   },
   "-0+": function () {
-    var e = trinary.setunws.state.command.address.charAt(0),
-      t = trinary.setunws.memory.zone.read(e),
-      n = trinary.setunws.state.command.address.substr(1, 4);
-    trinary.setunws.mb.write(n, t), trinary.setunws.console.log(["\u0424[" + e + "] -> M[" + n + "] data:", t])
+    var e = sws.state.command.address.charAt(0),
+      t = sws.memory.zone.read(e),
+      n = sws.state.command.address.substr(1, 4);
+    sws.mb.write(n, t), sws.console.log(["\u0424[" + e + "] -> M[" + n + "] data:", t])
   },
   "-0-": function () {
-    var e = trinary.setunws.state.command.address.substr(1, 4),
-      t = trinary.setunws.mb.read(e),
-      n = trinary.setunws.state.command.address.charAt(0);
-    trinary.setunws.memory.zone.write(n, t), trinary.setunws.console.log(["M[" + e + "] -> \u0424[" + n + "] data:", t])
+    var e = sws.state.command.address.substr(1, 4),
+      t = sws.mb.read(e),
+      n = sws.state.command.address.charAt(0);
+    sws.memory.zone.write(n, t), sws.console.log(["M[" + e + "] -> \u0424[" + n + "] data:", t])
   },
   "--0": function () {
-    trinary.setunws.processor.__stop = !0, trinary.setunws.console.log(["This command not used"])
+    sws.processor.__stop = !0, sws.console.log(["This command not used"])
   },
   "--+": function () {
-    trinary.setunws.processor.__stop = !0, trinary.setunws.console.log(["This command not used"])
+    sws.processor.__stop = !0, sws.console.log(["This command not used"])
   },
   "---": function () {
-    trinary.setunws.processor.__stop = !0, trinary.setunws.console.log(["This command not used"])
+    sws.processor.__stop = !0, sws.console.log(["This command not used"])
   }
-}, trinary.setunws.processor.tooltip = {
+}, sws.processor.tooltip = {
   "+00": {
     nonary: "30",
     name: "\u041f\u043e\u0441\u044b\u043b\u043a\u0430\xa0\u0432\xa0S\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0",
@@ -930,17 +937,17 @@ trinary.setunws.ft = {
     name: "\u041d\u0435\xa0\u0437\u0430\u0434\u0435\u0439\u0441\u0442\u0432\u043e\u0432\u0430\u043d\u0430\xa0\xa0\xa0\xa0\xa0",
     content: "\u0421\u0442\u043e\u043f\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0"
   }
-}, trinary.setunws.registers = {
+}, sws.registers = {
   register_update: function (e) {
     isset(e) || (e = []);
     var t, n;
-    for (var i in trinary.asetunws.core.register) t = trinary.setunws.core.register[i], n = isset(e[i]) ? e[i] : "0", trinary.setunws.core.register[i].value = trinary.core.align(n, t.size)
+    for (var i in trinary.asetunws.core.register) t = sws.core.register[i], n = isset(e[i]) ? e[i] : "0", sws.core.register[i].value = trinary.core.align(n, t.size)
   },
   reset: function () {
     var e, t;
-    for (var n in trinary.setunws.core.register) e = trinary.setunws.core.register[n], t = trinary.core.align("0", e.size), trinary.setunws.core.register[n].value = t
+    for (var n in sws.core.register) e = sws.core.register[n], t = trinary.core.align("0", e.size), sws.core.register[n].value = t
   }
-}, trinary.setunws.state = {
+}, sws.state = {
   cell: "",
   keying: !1,
   command: {
@@ -950,56 +957,56 @@ trinary.setunws.ft = {
     value: null
   },
   reset: function () {
-    trinary.setunws.state.cell = "", trinary.setunws.state.keying = !1, trinary.setunws.state.command = {
+    sws.state.cell = "", sws.state.keying = !1, sws.state.command = {
       address: null,
       code: null,
       flag: null,
       value: null
     }
   }
-}, trinary.setunws.ui = {
+}, sws.ui = {
   update: function () { },
   deallocate: function () { }
-}, trinary.setunws.uiss = {
+}, sws.uiss = {
   root: null,
   setRoot: function () {
-    trinary.setunws.uiss.root = $("<div>", {
+    sws.uiss.root = $("<div>", {
       id: "setunws"
     })
   },
   viewOriginal: function () {
-    trinary.setunws.ui.deallocate(), trinary.setunws.ui = trinary.setunws.uiss.original
+    sws.ui.deallocate(), sws.ui = sws.uiss.original
   },
   viewTerminal: function () {
-    trinary.setunws.ui.deallocate(), trinary.setunws.ui = trinary.setunws.uiss.terminal
+    sws.ui.deallocate(), sws.ui = sws.uiss.terminal
   }
-}, trinary.setunws.uiss.original = {
+}, sws.uiss.original = {
   root: null,
   svg: null,
   allocate: function () {
-    with (trinary.setunws.uiss.root.attr("class", "original"), trinary.setunws.uiss.original.root = $("<div>"), trinary.setunws.uiss.root.append(trinary.setunws.uiss.original.root), trinary.setunws.uiss.original) pult.init(), ft.init(1), root.append(ft.device[1].instance), ft.init(2), root.append(ft.device[2].instance), printer.init(), root.append(printer.instance), registers.init(), pult.append(registers), clock.init(), pult.append(clock), control.Address.init(), pult.append(control.Address), control.Code.init(), pult.append(control.Code), control.Command.init(), pult.append(control.Command), control.Buttons.init(), pult.append(control.Buttons), control.mode.StepByStep.init(), pult.append(control.mode.StepByStep), control.mode.CK.init(), pult.append(control.mode.CK), control.mode.MbFkVp.init(), pult.append(control.mode.MbFkVp), control.mode.SetUpCode.init(), pult.append(control.mode.SetUpCode), dispose()
+    with (sws.uiss.root.attr("class", "original"), sws.uiss.original.root = $("<div>"), sws.uiss.root.append(sws.uiss.original.root), sws.uiss.original) pult.init(), ft.init(1), root.append(ft.device[1].instance), ft.init(2), root.append(ft.device[2].instance), printer.init(), root.append(printer.instance), registers.init(), pult.append(registers), clock.init(), pult.append(clock), control.Address.init(), pult.append(control.Address), control.Code.init(), pult.append(control.Code), control.Command.init(), pult.append(control.Command), control.Buttons.init(), pult.append(control.Buttons), control.mode.StepByStep.init(), pult.append(control.mode.StepByStep), control.mode.CK.init(), pult.append(control.mode.CK), control.mode.MbFkVp.init(), pult.append(control.mode.MbFkVp), control.mode.SetUpCode.init(), pult.append(control.mode.SetUpCode), dispose()
   },
   deallocate: function () {
-    trinary.setunws.uiss.root.html("")
+    sws.uiss.root.html("")
   },
   dispose: function () {
-    with (trinary.setunws.core.register) k.instance.setTransform("translate(0, 0)"), f.instance.setTransform("translate(0, 50)"), c.instance.setTransform("translate(0, 100)"), w.instance.setTransform("translate(138, 50)"), s.instance.setTransform("translate(230, 0)"), r.instance.setTransform("translate(270, 50)"), mb.instance.setTransform("translate(292, 100)");
-    with (trinary.setunws.uiss.original) with (clock.instance.setTransform("translate(230,75)"), control) Command.instance.setTransform("translate(10, 170)"), Code.instance.setTransform("translate(300, 170)"), Address.instance.setTransform("translate(10, 250)"), Buttons.instance.setTransform("translate(275, 250)"), mode.StepByStep.instance.setTransform("translate(500,245)"), mode.CK.instance.setTransform("translate(130,220)"), mode.MbFkVp.instance.setTransform("translate(130,270)"), mode.SetUpCode.instance.setTransform("translate(220,170)")
+    with (sws.core.register) k.instance.setTransform("translate(0, 0)"), f.instance.setTransform("translate(0, 50)"), c.instance.setTransform("translate(0, 100)"), w.instance.setTransform("translate(138, 50)"), s.instance.setTransform("translate(230, 0)"), r.instance.setTransform("translate(270, 50)"), mb.instance.setTransform("translate(292, 100)");
+    with (sws.uiss.original) with (clock.instance.setTransform("translate(230,75)"), control) Command.instance.setTransform("translate(10, 170)"), Code.instance.setTransform("translate(300, 170)"), Address.instance.setTransform("translate(10, 250)"), Buttons.instance.setTransform("translate(275, 250)"), mode.StepByStep.instance.setTransform("translate(500,245)"), mode.CK.instance.setTransform("translate(130,220)"), mode.MbFkVp.instance.setTransform("translate(130,270)"), mode.SetUpCode.instance.setTransform("translate(220,170)")
   },
   update: function () {
-    trinary.setunws.uiss.original.registers.update(), trinary.setunws.uiss.original.ft.update(), trinary.setunws.uiss.original.printer.print()
+    sws.uiss.original.registers.update(), sws.uiss.original.ft.update(), sws.uiss.original.printer.print()
   }
-}, trinary.setunws.uiss.original.pult = {
+}, sws.uiss.original.pult = {
   instance: null,
   init: function () {
-    var e = trinary.setunws.uiss.root,
+    var e = sws.uiss.root,
       t = e.width(),
-      n = trinary.setunws.uiss.original.svg = SVG.create("svg");
+      n = sws.uiss.original.svg = SVG.create("svg");
     n.attr({
       width: t,
       height: t / 2
-    }), $(trinary.setunws.uiss.original.root).append(n.instance);
-    var i = trinary.setunws.uiss.original.pult.instance = trinary.setunws.uiss.original.widget.panel({
+    }), $(sws.uiss.original.root).append(n.instance);
+    var i = sws.uiss.original.pult.instance = sws.uiss.original.widget.panel({
       "class": "pult"
     });
     n.append(i), i.scale(t / 650), e.css("height", "auto"), $(window).resize(function () {
@@ -1012,14 +1019,14 @@ trinary.setunws.ft = {
   },
   append: function (e) {
     var t = null != e.instance ? e.instance : e;
-    trinary.setunws.uiss.original.pult.instance.append(t)
+    sws.uiss.original.pult.instance.append(t)
   }
-}, trinary.setunws.uiss.original.registers = {
+}, sws.uiss.original.registers = {
   instance: null,
   instances: {},
   init: function () {
-    var e = trinary.setunws.uiss.original.widget,
-      t = trinary.setunws.core.register,
+    var e = sws.uiss.original.widget,
+      t = sws.core.register,
       n = e.panel({
         "class": "registers"
       });
@@ -1030,7 +1037,7 @@ trinary.setunws.ft = {
             "class": "register",
             name: register
           }),
-          o = trinary.setunws.uiss.original.widget.indicatorsSet(i);
+          o = sws.uiss.original.widget.indicatorsSet(i);
         o.setTransform("translate(30)");
         var s = e.label({
           x: 14,
@@ -1038,7 +1045,7 @@ trinary.setunws.ft = {
         });
         if (s.text(i.label), "s" == register) {
           o.setTransform("translate(70)");
-          var a = trinary.setunws.uiss.original.widget.indicatorsSet(t.p, {
+          var a = sws.uiss.original.widget.indicatorsSet(t.p, {
             labelPrefix: t.p.label + " ",
             noGrouped: !0
           });
@@ -1046,90 +1053,90 @@ trinary.setunws.ft = {
         }
         r.append(o), r.append(s), i.instance = r, n.append(r)
       }
-    trinary.setunws.uiss.original.registers.instance = n
+    sws.uiss.original.registers.instance = n
   },
   read: function () {
-    trinary.setunws.uiss.original.registers.update()
+    sws.uiss.original.registers.update()
   },
   update: function () {
-    for (name in trinary.setunws.core.register)
-      for (var e = trinary.setunws.core.register[name], t = 0; t < e.size; t++) {
-        var n = trinary.setunws.core.register[name].indicator[t];
+    for (name in sws.core.register)
+      for (var e = sws.core.register[name], t = 0; t < e.size; t++) {
+        var n = sws.core.register[name].indicator[t];
         if (null != n) {
           var i = e.value.charAt(t);
           n.attr("value", i)
         }
       }
   }
-}, trinary.setunws.uiss.original.control = {
+}, sws.uiss.original.control = {
   Address: {
     instance: null,
     switcher: [],
     init: function () {
-      var e = trinary.setunws.uiss.original.widget.switchers({
+      var e = sws.uiss.original.widget.switchers({
         name: "setAddress",
         size: 5,
         label: "\u0410\u0434\u0440\u0435\u0441 \u043e\u0441\u0442\u0430\u043d\u043e\u0432\u0430"
       });
-      trinary.setunws.uiss.original.control.Address.instance = e.instance, trinary.setunws.uiss.original.control.Address.switcher = e.switcher
+      sws.uiss.original.control.Address.instance = e.instance, sws.uiss.original.control.Address.switcher = e.switcher
     }
   },
   Command: {
     instance: null,
     switcher: [],
     init: function () {
-      var e = trinary.setunws.uiss.original.widget.switchers({
+      var e = sws.uiss.original.widget.switchers({
         name: "command",
         size: 9,
         label: "\u041d\u0430\u0431\u043e\u0440 \u043a\u043e\u043c\u0430\u043d\u0434\u044b"
       });
-      trinary.setunws.uiss.original.control.Command.instance = e.instance, trinary.setunws.uiss.original.control.Command.switcher = e.switcher
+      sws.uiss.original.control.Command.instance = e.instance, sws.uiss.original.control.Command.switcher = e.switcher
     }
   },
   Code: {
     instance: null,
     switcher: [],
     init: function () {
-      var e = trinary.setunws.uiss.original.widget.switchers({
+      var e = sws.uiss.original.widget.switchers({
         name: "setCode",
         size: 18,
         action: "setCode"
       }),
-        t = trinary.setunws.uiss.original.control.Code;
+        t = sws.uiss.original.control.Code;
       t.instance = e.instance, t.switcher = e.switcher, t.instance.onclick = function () {
-        trinary.setunws.uiss.original.actions.Set.code()
+        sws.uiss.original.actions.Set.code()
       }
     }
   },
   Buttons: {
     instance: null,
     init: function () {
-      var e = trinary.setunws.core.button,
+      var e = sws.core.button,
         t = 0,
         n = SVG.create("g"),
         i = null;
-      for (button in e) i = e[button], i.instance = trinary.setunws.uiss.original.widget.button(i), i.instance.attr("name", button), i.instance.setTransform("translate(" + t + ")"), n.append(i.instance), t += 50, i.instance.parent = i, i.instance.onclick = function () {
-        "disabled" != this.attr("disabled") && trinary.setunws.uiss.original.actions[this.parent.action] && trinary.setunws.uiss.original.actions[this.parent.action]()
+      for (button in e) i = e[button], i.instance = sws.uiss.original.widget.button(i), i.instance.attr("name", button), i.instance.setTransform("translate(" + t + ")"), n.append(i.instance), t += 50, i.instance.parent = i, i.instance.onclick = function () {
+        "disabled" != this.attr("disabled") && sws.uiss.original.actions[this.parent.action] && sws.uiss.original.actions[this.parent.action]()
       };
-      return e.boot.instance.attr("disabled", "disabled"), trinary.setunws.uiss.original.control.Buttons.instance = n, n
+      return e.boot.instance.attr("disabled", "disabled"), sws.uiss.original.control.Buttons.instance = n, n
     }
   }
-}, trinary.setunws.uiss.original.control.mode = {
+}, sws.uiss.original.control.mode = {
   StepByStep: {
     instance: null,
     init: function () {
-      var e = trinary.setunws.core.mode["step-by-step"],
-        t = trinary.setunws.uiss.original.widget.panel({
+      var e = sws.core.mode["step-by-step"],
+        t = sws.uiss.original.widget.panel({
           "class": "modeswitcher"
         });
       t.attr("value", e);
-      var n = trinary.setunws.uiss.original.widget.bulb();
+      var n = sws.uiss.original.widget.bulb();
       n.setTransform("translate(5,5)");
-      var i = trinary.setunws.uiss.original.widget.switcher({
+      var i = sws.uiss.original.widget.switcher({
         position: "reverse-horizontal"
       });
       i.setTransform("translate(25,5)");
-      var r = trinary.setunws.uiss.original.widget.label({
+      var r = sws.uiss.original.widget.label({
         x: 0,
         y: 25
       }),
@@ -1143,59 +1150,59 @@ trinary.setunws.ft = {
         dy: "1em"
       });
       return s.text("\u0440\u0435\u0436\u0438\u043c"), r.append(o), r.append(s), t.append(n), t.append(i), t.append(r), t.onclick = function () {
-        this.attr("value", "+" == this.attr("value") ? "-" : "+"), trinary.setunws.uiss.original.actions.Set.stepByStep()
-      }, trinary.setunws.uiss.original.control.mode.StepByStep.instance = t, t
+        this.attr("value", "+" == this.attr("value") ? "-" : "+"), sws.uiss.original.actions.Set.stepByStep()
+      }, sws.uiss.original.control.mode.StepByStep.instance = t, t
     },
     change: function () {
-      trinary.setunws.uiss.original.control.mode.StepByStep.instance.attr("value"), trinary.setunws.uiss.original.control.mode.SetUpCode.instance.attr("value")
+      sws.uiss.original.control.mode.StepByStep.instance.attr("value"), sws.uiss.original.control.mode.SetUpCode.instance.attr("value")
     }
   },
   CK: {
     instance: null,
     init: function () {
-      var e = trinary.setunws.uiss.original.widget.triSwitcher({
+      var e = sws.uiss.original.widget.triSwitcher({
         labelMinus: "C",
         labelZero: "",
         labelPlus: "K"
       });
       e.onclick = function () {
-        trinary.setunws.uiss.original.actions.Set.ck()
-      }, trinary.setunws.uiss.original.control.mode.CK.instance = e
+        sws.uiss.original.actions.Set.ck()
+      }, sws.uiss.original.control.mode.CK.instance = e
     }
   },
   MbFkVp: {
     instance: null,
     init: function () {
-      var e = trinary.setunws.uiss.original.widget.triSwitcher({
+      var e = sws.uiss.original.widget.triSwitcher({
         labelMinus: "\u041c\u0411",
         labelZero: "\u0424\u041a",
         labelPlus: "\u0412\u041f"
       });
       e.onclick = function () {
-        trinary.setunws.uiss.original.actions.Set.mbfkvp()
-      }, trinary.setunws.uiss.original.control.mode.MbFkVp.instance = e
+        sws.uiss.original.actions.Set.mbfkvp()
+      }, sws.uiss.original.control.mode.MbFkVp.instance = e
     }
   },
   SetUpCode: {
     instance: null,
     init: function () {
-      var e = trinary.setunws.uiss.original.widget.biSwitcher({
+      var e = sws.uiss.original.widget.biSwitcher({
         label: "\u041d\u0430\u0431\u043e\u0440 \u043a\u043e\u0434\u0430"
       });
-      e.attr("value", trinary.setunws.operation.getModeSetUpCode()), e.onclick = function () {
-        trinary.setunws.uiss.original.control.mode.SetUpCode.change()
-      }, trinary.setunws.uiss.original.control.mode.SetUpCode.instance = e
+      e.attr("value", sws.operation.getModeSetUpCode()), e.onclick = function () {
+        sws.uiss.original.control.mode.SetUpCode.change()
+      }, sws.uiss.original.control.mode.SetUpCode.instance = e
     },
     change: function () {
-      var e = trinary.setunws.operation.changeModeSetUpCode();
-      trinary.setunws.uiss.original.control.mode.SetUpCode.instance.attr("value", e)
+      var e = sws.operation.changeModeSetUpCode();
+      sws.uiss.original.control.mode.SetUpCode.instance.attr("value", e)
     }
   }
-}, trinary.setunws.uiss.original.ft = {
+}, sws.uiss.original.ft = {
   device: [],
   init: function (e) {
-    trinary.setunws.uiss.original.ft.device[e] = [];
-    var t = trinary.setunws.uiss.original.ft.device[e],
+    sws.uiss.original.ft.device[e] = [];
+    var t = sws.uiss.original.ft.device[e],
       n = t.instance = $("<ft>", {
         name: e
       });
@@ -1204,132 +1211,132 @@ trinary.setunws.ft = {
     }), t.button = $("<button>", {
       name: "load"
     }), t.button.html("\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u043b\u0435\u043d\u0442\u0443"), n.append(t.label), n.append(t.input), n.append(t.button), t.button.click(function () {
-      trinary.setunws.uiss.original.ft.load(e)
+      sws.uiss.original.ft.load(e)
     }), t.input.dblclick(function () {
       this.select()
     }), n
   },
   update: function () {
-    var e = trinary.setunws.core.ft;
+    var e = sws.core.ft;
     for (var t in e)
-      if (null != trinary.setunws.uiss.original.ft.device[t]) {
+      if (null != sws.uiss.original.ft.device[t]) {
         var n = "";
         for (line in e[t]) n += e[t][line] + "\n";
-        trinary.setunws.uiss.original.ft.device[t].input.val(n)
+        sws.uiss.original.ft.device[t].input.val(n)
       }
   },
   load: function (e) {
-    var t = trinary.setunws.uiss.original.ft.device[e].input.val();
-    e && t && (trinary.setunws.ft.load(e, t), trinary.setunws.uiss.original.ft.update(), 1 == e && trinary.setunws.core.button.boot.instance.attr("disabled", ""))
+    var t = sws.uiss.original.ft.device[e].input.val();
+    e && t && (sws.ft.load(e, t), sws.uiss.original.ft.update(), 1 == e && sws.core.button.boot.instance.attr("disabled", ""))
   }
-}, trinary.setunws.uiss.original.memory = {
+}, sws.uiss.original.memory = {
   instance: null,
   cells: {},
   init: function () {
-    var e = trinary.setunws.core.memory,
+    var e = sws.core.memory,
       t = $("<memory>"),
       n = $("<label>");
     n.html("\u041e\u0417\u0423"), t.append(n);
     var i = 0,
-      r = trinary.setunws.uiss.original.memory.cells;
+      r = sws.uiss.original.memory.cells;
     for (address in e) {
       if (i % 54 == 0) {
         var o = $("<bank>");
         t.append(o)
       }
-      r[address] = trinary.setunws.uiss.original.widget.cell(address, e[address]), r[address].input.blur(function () {
-        trinary.setunws.uiss.original.memory.updateCell(this.name, this.value)
+      r[address] = sws.uiss.original.widget.cell(address, e[address]), r[address].input.blur(function () {
+        sws.uiss.original.memory.updateCell(this.name, this.value)
       }), o.append(r[address].instance), i++
     }
-    return trinary.setunws.uiss.original.memory.instance = t, t
+    return sws.uiss.original.memory.instance = t, t
   },
   updateCell: function (e, t) {
-    var n = trinary.setunws.uiss.original.memory.cells[e];
-    t = trinary.setunws.memory.write(e, t), n.input.val(t), n.tooltip.html(trinary.core.trinaryToNonary(e) + ":" + trinary.core.trinaryToNonary(t))
+    var n = sws.uiss.original.memory.cells[e];
+    t = sws.memory.write(e, t), n.input.val(t), n.tooltip.html(trinary.core.trinaryToNonary(e) + ":" + trinary.core.trinaryToNonary(t))
   },
   update: function () {
-    var e = trinary.setunws.core.memory;
-    for (address in e) trinary.setunws.uiss.original.memory.updateCell(address, e[address])
+    var e = sws.core.memory;
+    for (address in e) sws.uiss.original.memory.updateCell(address, e[address])
   },
   read: function () {
-    trinary.setunws.uiss.original.refresh_cell()
+    sws.uiss.original.refresh_cell()
   },
   cell: function (e) {
     return;
   },
   highlight: function (e, t) { },
   clearhighlight: function (e) { }
-}, trinary.setunws.uiss.original.printer = {
+}, sws.uiss.original.printer = {
   instance: null,
   output: null,
   init: function () {
-    var e = trinary.setunws.uiss.original.printer.instance = $('<div class="printer"></div>'),
-      t = trinary.setunws.uiss.original.printer.output = $('<div class="output"></div>'),
+    var e = sws.uiss.original.printer.instance = $('<div class="printer"></div>'),
+      t = sws.uiss.original.printer.output = $('<div class="output"></div>'),
       n = $("<label>");
     return n.html("\u041f\u0440\u0438\u043d\u0442\u0435\u0440 \u042d\u0423\u041c-46"), e.append(n), e.append(t), e
   },
   print: function () {
-    trinary.setunws.uiss.original.printer.output.html(trinary.setunws.uiss.original.printer.output.html() + "\n" + trinary.setunws.core.printer.data)
+    sws.uiss.original.printer.output.html(sws.uiss.original.printer.output.html() + "\n" + sws.core.printer.data)
   }
-}, trinary.setunws.uiss.original.actions = {
+}, sws.uiss.original.actions = {
   boot: function () {
-    trinary.setunws.core.button.boot.instance.attr("disabled", "disabled"), trinary.setunws.core.button.start.instance.attr("disabled", ""), trinary.setunws.operation.boot(), trinary.setunws.uiss.original.update()
+    sws.core.button.boot.instance.attr("disabled", "disabled"), sws.core.button.start.instance.attr("disabled", ""), sws.operation.boot(), sws.uiss.original.update()
   },
   step: function () {
-    var e = trinary.setunws.core.button.start;
-    e.instance.attr("disabled", "disabled"), trinary.setunws.uiss.original.memory.highlight(trinary.setunws.core.register.c.value, "before"), trinary.setunws.operation.step(), trinary.setunws.uiss.original.update(), trinary.setunws.uiss.original.memory.highlight(trinary.setunws.core.register.c.value, "now"), e.instance.attr("disabled", "")
+    var e = sws.core.button.start;
+    e.instance.attr("disabled", "disabled"), sws.uiss.original.memory.highlight(sws.core.register.c.value, "before"), sws.operation.step(), sws.uiss.original.update(), sws.uiss.original.memory.highlight(sws.core.register.c.value, "now"), e.instance.attr("disabled", "")
   },
   start: function () {
-    var e = trinary.setunws.core.button.start;
-    e.instance.attr("disabled", "disabled"), trinary.setunws.uiss.original.memory.highlight(trinary.setunws.core.register.c.value, "before"), trinary.setunws.operation.start(), trinary.setunws.uiss.original.update(), trinary.setunws.uiss.original.memory.highlight(trinary.setunws.core.register.c.value, "now"), e.instance.attr("disabled", "")
+    var e = sws.core.button.start;
+    e.instance.attr("disabled", "disabled"), sws.uiss.original.memory.highlight(sws.core.register.c.value, "before"), sws.operation.start(), sws.uiss.original.update(), sws.uiss.original.memory.highlight(sws.core.register.c.value, "now"), e.instance.attr("disabled", "")
   },
   execute: function () {
     var e = "",
-      t = trinary.setunws.uiss.original.control.Command.switcher;
+      t = sws.uiss.original.control.Command.switcher;
     for (i in t) e += t[i].attr("value");
-    trinary.setunws.operation.execute(e), trinary.setunws.uiss.original.update(), "+" == trinary.setunws.core.mode["step-by-step"]
+    sws.operation.execute(e), sws.uiss.original.update(), "+" == sws.core.mode["step-by-step"]
   },
   stop: function () {
-    trinary.setunws.operation.stop()
+    sws.operation.stop()
   },
   Set: {
     code: function () {
-      var e = trinary.setunws.uiss.original.control.Code,
+      var e = sws.uiss.original.control.Code,
         t = "";
       for (i in e.switcher) t += e.switcher[i].attr("value");
-      t = trinary.setunws.operation.setCode(t)
+      t = sws.operation.setCode(t)
     },
     ck: function () {
-      var e = trinary.setunws.uiss.original.control.mode.CK.instance.attr("value");
-      trinary.setunws.operation.setModeCK(e);
-      var t = trinary.setunws.core["c-k"];
+      var e = sws.uiss.original.control.mode.CK.instance.attr("value");
+      sws.operation.setModeCK(e);
+      var t = sws.core["c-k"];
       t = "+" == t ? "K" : "-" == t ? "C" : "\u0441\u043d\u044f\u0442"
     },
     mbfkvp: function () {
-      var e = trinary.setunws.uiss.original.control.mode.MbFkVp.instance.attr("value");
-      trinary.setunws.operation.setModeMbFkVp(e);
-      var t = trinary.setunws.core["mb-fk-vp"];
+      var e = sws.uiss.original.control.mode.MbFkVp.instance.attr("value");
+      sws.operation.setModeMbFkVp(e);
+      var t = sws.core["mb-fk-vp"];
       t = "+" == t ? "\u0412\u041f" : "-" == t ? "\u041c\u0411" : "\u0424\u041a"
     },
     stepByStep: function () {
-      var e = trinary.setunws.uiss.original.control.mode.StepByStep.instance.attr("value");
-      trinary.setunws.operation.setModeStepByStep(e), trinary.setunws.uiss.original.control.mode.StepByStep.change()
+      var e = sws.uiss.original.control.mode.StepByStep.instance.attr("value");
+      sws.operation.setModeStepByStep(e), sws.uiss.original.control.mode.StepByStep.change()
     }
   }
-}, trinary.setunws.uiss.original.log = {
+}, sws.uiss.original.log = {
   instance: null,
   output: null,
   init: function () {
-    var e = (trinary.setunws.uiss.original.log.instance = $("<console>"), trinary.setunws.uiss.original.log.output = $("<output>"), $("<label>"));
+    var e = (sws.uiss.original.log.instance = $("<console>"), sws.uiss.original.log.output = $("<output>"), $("<label>"));
     e.html("\u041a\u043e\u043d\u0441\u043e\u043b\u044c")
   },
   write: function () {
-    trinary.setunws.uiss.original.log.output
+    sws.uiss.original.log.output
   },
   clear: function () {
-    trinary.setunws.uiss.original.log.output.html("")
+    sws.uiss.original.log.output.html("")
   }
-}, trinary.setunws.uiss.original.widget = {
+}, sws.uiss.original.widget = {
   panel: function (e) {
     return SVG.create("g", e)
   },
@@ -1358,9 +1365,9 @@ trinary.setunws.ft = {
     var t = SVG.create("g", {
       "class": "indicator"
     }),
-      n = trinary.setunws.uiss.original.widget.bulb();
+      n = sws.uiss.original.widget.bulb();
     n.setTransform("translate(0,10)");
-    var i = trinary.setunws.uiss.original.widget.bulb();
+    var i = sws.uiss.original.widget.bulb();
     i.setTransform("translate(0,26)");
     var r = SVG.create("text", {
       x: 0,
@@ -1376,7 +1383,7 @@ trinary.setunws.ft = {
         "class": "indicators-set"
       });
     e.indicator = [];
-    for (var a = void 0 == t.labelPrefix ? "" : t.labelPrefix, l = void 0 == t.noGrouped ? 5 : 0, c = 17, u = c + l, h = 0; h < e.size; h++) n = trinary.setunws.uiss.original.widget.indicator({
+    for (var a = void 0 == t.labelPrefix ? "" : t.labelPrefix, l = void 0 == t.noGrouped ? 5 : 0, c = 17, u = c + l, h = 0; h < e.size; h++) n = sws.uiss.original.widget.indicator({
       label: a + (h + 1).toString()
     }), n.setTransform("translate(" + r + ",0)"), 9 == o && (o = 0, r += l), r += o++ % 2 == 0 ? u : c, i = null != e.value && e.value[h] ? e.value[h] : "0", n.attr("value", i), e.indicator[h] = n, s.append(n);
     return s
@@ -1465,7 +1472,7 @@ trinary.setunws.ft = {
       o = 0,
       s = {};
     s.switcher = [];
-    for (var a = 0; a < e.size; a++) t = trinary.setunws.uiss.original.widget.switcher({
+    for (var a = 0; a < e.size; a++) t = sws.uiss.original.widget.switcher({
       label: a + 1
     }), t.setTransform("translate(" + r + ",0)"), 9 == o && (o = 0, r += 5), r += o++ % 2 == 0 ? 23 : 16, t.attr("value", n), t.onclick = function () {
       var e = this.attr("value"),
@@ -1487,8 +1494,8 @@ trinary.setunws.ft = {
       "class": "switcher bi-switcher"
     });
     t.attr("value", "-");
-    var n = trinary.setunws.uiss.original.widget.bulb(),
-      i = trinary.setunws.uiss.original.widget.switcher({
+    var n = sws.uiss.original.widget.bulb(),
+      i = sws.uiss.original.widget.switcher({
         position: "reverse-horizontal"
       });
     if (i.setTransform("translate(20)"), t.append(n), t.append(i), null != e.label) {
@@ -1505,9 +1512,9 @@ trinary.setunws.ft = {
     var t = SVG.create("g", {
       "class": "switcher tri-switcher"
     }),
-      n = trinary.setunws.uiss.original.widget.bulb(),
-      i = trinary.setunws.uiss.original.widget.bulb(),
-      r = trinary.setunws.uiss.original.widget.switcher({
+      n = sws.uiss.original.widget.bulb(),
+      i = sws.uiss.original.widget.bulb(),
+      r = sws.uiss.original.widget.switcher({
         position: "horizontal"
       }),
       o = SVG.create("text", {
@@ -1553,11 +1560,11 @@ trinary.setunws.ft = {
     }
     return t
   }
-}, trinary.setunws.uiss.original.clock = {
+}, sws.uiss.original.clock = {
   instance: null,
   init: function (e) {
     null == e && (e = {});
-    var t = trinary.setunws.uiss.original.widget.panel({
+    var t = sws.uiss.original.widget.panel({
       "class": "clock"
     });
     t.append(SVG.create("circle", {
@@ -1604,9 +1611,9 @@ trinary.setunws.ft = {
       r > 12 && (r -= 12);
       var i = 360 * (r + n.getMinutes() / 60) / 12 - 90;
       e.setTransform("rotate(" + i + ")")
-    }, 1e3, a, l), trinary.setunws.uiss.original.clock.instance = t
+    }, 1e3, a, l), sws.uiss.original.clock.instance = t
   }
-}, trinary.setunws.uiss.terminal = {
+}, sws.uiss.terminal = {
   registers: [],
   cells: [],
   printer: null,
@@ -1644,55 +1651,55 @@ trinary.setunws.ft = {
     }
   },
   update: function () {
-    var e = trinary.setunws.uiss.terminal.dump;
-    e.log(), trinary.setunws.uiss.terminal.printer.update(), e.register(), e.memory(), e.ft(1), e.ft(2)
+    var e = sws.uiss.terminal.dump;
+    e.log(), sws.uiss.terminal.printer.update(), e.register(), e.memory(), e.ft(1), e.ft(2)
   },
   allocate: function () {
-    var e = trinary.setunws.uiss.root,
-      t = trinary.setunws.uiss.terminal,
+    var e = sws.uiss.root,
+      t = sws.uiss.terminal,
       n = $("<div>", {
         "class": "control"
       });
     e.append(n), t.instance.control.boot.html("\u041d\u0430\u0447\u0430\u043b\u044c\u043d\u044b\u0439 \u043f\u0443\u0441\u043a"), t.instance.control.start.html("\u041f\u0443\u0441\u043a"), t.instance.control.step.html("\u0422\u0430\u043a\u0442"), t.instance.control.stop.html("\u041e\u0441\u0442\u0430\u043d\u043e\u0432"), t.instance.control.boot.click(function () {
-      trinary.setunws.operation.boot(), trinary.setunws.uiss.terminal.update()
+      sws.operation.boot(), sws.uiss.terminal.update()
     }), t.instance.control.start.click(function () {
-      trinary.setunws.operation.start()
+      sws.operation.start()
     }), t.instance.control.step.click(function () {
-      trinary.setunws.operation.step()
+      sws.operation.step()
     }), t.instance.control.stop.click(function () {
-      trinary.setunws.operation.stop()
+      sws.operation.stop()
     }), n.append(t.instance.control.boot), n.append(t.instance.control.start), n.append(t.instance.control.step), n.append(t.instance.control.stop);
     var i = $("<div>", {
       "class": "registers"
     }),
       r = $("<h4>");
     r.html("\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u044b"), i.append(r);
-    var o = trinary.setunws.uiss.terminal.registers,
+    var o = sws.uiss.terminal.registers,
       s = $("<ul>");
     i.append(s), e.append(i);
-    for (var a in trinary.setunws.core.register) {
-      var l = trinary.setunws.uiss.terminal.widget.register(a);
+    for (var a in sws.core.register) {
+      var l = sws.uiss.terminal.widget.register(a);
       s.append($("<li>").append(l)), o.push(l)
     }
-    trinary.setunws.uiss.terminal.printer = trinary.setunws.uiss.terminal.widget.printer(), e.append(trinary.setunws.uiss.terminal.printer), t.instance.ft[1] = t.widget.ft(1), t.instance.ft[2] = t.widget.ft(2), e.append(t.instance.ft[1]), e.append(t.instance.ft[2]), t.cache.ft[1] = "", t.cache.ft[2] = "";
+    sws.uiss.terminal.printer = sws.uiss.terminal.widget.printer(), e.append(sws.uiss.terminal.printer), t.instance.ft[1] = t.widget.ft(1), t.instance.ft[2] = t.widget.ft(2), e.append(t.instance.ft[1]), e.append(t.instance.ft[2]), t.cache.ft[1] = "", t.cache.ft[2] = "";
     var i = $("<div>", {
       "class": "memory"
     }),
       r = $("<h4>");
     r.html("\u041e\u0417\u0423"), i.append(r);
-    var c = trinary.setunws.uiss.terminal.cells,
+    var c = sws.uiss.terminal.cells,
       u = 0;
-    for (var h in trinary.setunws.core.memory) {
+    for (var h in sws.core.memory) {
       (0 == u || 54 == u || 108 == u) && (s = $("<ul>", {
         "class": "bank"
-      }), i.append(s)), trinary.setunws.uiss.terminal.cache.cells[h] = "";
-      var l = trinary.setunws.uiss.terminal.widget.cell(h);
+      }), i.append(s)), sws.uiss.terminal.cache.cells[h] = "";
+      var l = sws.uiss.terminal.widget.cell(h);
       s.append(l), c.push(l), u++
     }
     e.append(i), e.append("<h4>\u041a\u043e\u043d\u0441\u043e\u043b\u044c</h4>"), e.append(t.instance.console)
   },
   deallocate: function () {
-    trinary.setunws.uiss.root.html("")
+    sws.uiss.root.html("")
   },
   updateTextNode: function (e, t) {
     null == e.firstChild ? e.appendChild(document.createTextNode(t)) : e.firstChild.data = t
@@ -1700,10 +1707,10 @@ trinary.setunws.ft = {
   widget: {
     register: function (e) {
       var t = $("<label>");
-      t.html(trinary.setunws.core.register[e].label + ": ");
+      t.html(sws.core.register[e].label + ": ");
       var n = $("<dfn>");
       return t.append(n), n = n[0], t.update = function () {
-        trinary.setunws.uiss.terminal.updateTextNode(n, trinary.setunws.core.register[e].value)
+        sws.uiss.terminal.updateTextNode(n, sws.core.register[e].value)
       }, t.update(), t.attr("name", e), t
     },
     cell: function (e) {
@@ -1718,8 +1725,8 @@ trinary.setunws.ft = {
       r.html(trinary.core.trinaryToNonary(e) + ": ");
       var o = $("<dfn>");
       return t.append(r), t.append(o), o = o[0], t.update = function () {
-        var t = trinary.setunws.core.memory[e];
-        trinary.setunws.uiss.terminal.cache.cells[e] != t && (trinary.setunws.uiss.terminal.cache.cells[e] = t, trinary.setunws.uiss.terminal.updateTextNode(i, t), trinary.setunws.uiss.terminal.updateTextNode(o, trinary.core.trinaryToNonary(t)))
+        var t = sws.core.memory[e];
+        sws.uiss.terminal.cache.cells[e] != t && (sws.uiss.terminal.cache.cells[e] = t, sws.uiss.terminal.updateTextNode(i, t), sws.uiss.terminal.updateTextNode(o, trinary.core.trinaryToNonary(t)))
       }, t.update(), t.attr("name", name), t
     },
     printer: function () {
@@ -1732,7 +1739,7 @@ trinary.setunws.ft = {
       e.html("<h4>\u042d\u0423\u041c</h4>"), e.append(t);
       var n = t[0];
       return e.update = function () {
-        n.textContent = trinary.setunws.core.printer.data
+        n.textContent = sws.core.printer.data
       }, e
     },
     ft: function (e) {
@@ -1751,10 +1758,10 @@ trinary.setunws.ft = {
       r.html("\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u043b\u0435\u043d\u0442\u0443"), t.append(n), t.append(i), t.append(r);
       var o = i[0];
       return t.update = function () {
-        var t = trinary.setunws.core.ft[e].join("\n");
-        trinary.setunws.uiss.terminal.cache.ft[e] != t && (o.value = t, trinary.setunws.uiss.terminal.cache.ft[e] = t)
+        var t = sws.core.ft[e].join("\n");
+        sws.uiss.terminal.cache.ft[e] != t && (o.value = t, sws.uiss.terminal.cache.ft[e] = t)
       }, r.click(function () {
-        trinary.setunws.ft.load(e, i.val()), t.update()
+        sws.ft.load(e, i.val()), t.update()
       }), i.dblclick(function () {
         this.select()
       }), t
@@ -1762,34 +1769,34 @@ trinary.setunws.ft = {
   },
   dump: {
     register: function () {
-      for (var e = trinary.setunws.uiss.terminal.registers, t = 0; t < e.length; t++) e[t].update()
+      for (var e = sws.uiss.terminal.registers, t = 0; t < e.length; t++) e[t].update()
     },
     mode: function () {
       var e = "";
-      for (var t in trinary.setunws.core.register) {
-        var n = trinary.setunws.core.register[t];
+      for (var t in sws.core.register) {
+        var n = sws.core.register[t];
         e += t + ": " + n.value + "\n"
       }
       e += "\n";
-      for (var t in trinary.setunws.core.mode) {
-        var i = trinary.setunws.core.mode[t];
+      for (var t in sws.core.mode) {
+        var i = sws.core.mode[t];
         e += t + ": " + i + "\n"
       }
-      e += "\n", e += "printer: " + trinary.setunws.core.printer.data, trinary.setunws.uiss.terminal.instance.register.val(e)
+      e += "\n", e += "printer: " + sws.core.printer.data, sws.uiss.terminal.instance.register.val(e)
     },
     memory: function () {
-      for (var e = trinary.setunws.uiss.terminal.cells, t = 0; t < e.length; t++) e[t].update()
+      for (var e = sws.uiss.terminal.cells, t = 0; t < e.length; t++) e[t].update()
     },
     ft: function (e) {
       var t = "";
-      for (var n in trinary.setunws.core.ft[e]) {
-        var i = trinary.setunws.core.ft[e][n];
+      for (var n in sws.core.ft[e]) {
+        var i = sws.core.ft[e][n];
         t += i + " | ", t += trinary.core.trinaryToNonary(i) + "\n"
       }
-      trinary.setunws.uiss.terminal.instance.ft[e].val(t)
+      sws.uiss.terminal.instance.ft[e].val(t)
     },
     log: function () {
-      trinary.setunws.uiss.terminal.updateTextNode(trinary.setunws.uiss.terminal.instance.console[0], trinary.setunws.console.stack.join("\n"))
+      sws.uiss.terminal.updateTextNode(sws.uiss.terminal.instance.console[0], sws.console.stack.join("\n"))
     }
   }
 }, window.AceEditorController = function () {
