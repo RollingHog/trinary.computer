@@ -1,0 +1,1524 @@
+/* remove me before merge */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+hr,
+dl,
+dd,
+ol,
+ul,
+figure {
+  margin: 0;
+  padding: 0
+}
+
+body {
+  font: 400 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: #111;
+  background-color: #fdfdfd;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-feature-settings: "kern" 1;
+  -moz-font-feature-settings: "kern" 1;
+  -o-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+ul,
+ol,
+dl,
+figure,
+.highlight {
+  margin-bottom: 15px
+}
+
+main {
+  display: block
+}
+
+img {
+  max-width: 100%;
+  vertical-align: middle
+}
+
+figure>img {
+  display: block
+}
+
+figcaption {
+  font-size: 14px
+}
+
+ul,
+ol {
+  margin-left: 30px
+}
+
+li>ul,
+li>ol {
+  margin-bottom: 0
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 400
+}
+
+a {
+  color: #2a7ae2;
+  text-decoration: none
+}
+
+a:visited {
+  color: #1756a9
+}
+
+a:hover {
+  color: #111;
+  text-decoration: underline
+}
+
+.social-media-list a:hover {
+  text-decoration: none
+}
+
+.social-media-list a:hover .username {
+  text-decoration: underline
+}
+
+blockquote {
+  color: #828282;
+  border-left: 4px solid #e8e8e8;
+  padding-left: 15px;
+  font-size: 18px;
+  letter-spacing: -1px;
+  font-style: italic
+}
+
+blockquote>:last-child {
+  margin-bottom: 0
+}
+
+pre,
+code {
+  font-size: 15px;
+  border: 1px solid #e8e8e8;
+  border-radius: 3px;
+  background-color: #eef
+}
+
+code {
+  padding: 1px 5px
+}
+
+pre {
+  padding: 8px 12px;
+  overflow-x: auto
+}
+
+pre>code {
+  border: 0;
+  padding-right: 0;
+  padding-left: 0
+}
+
+.wrapper {
+  max-width: -webkit-calc(800px - (30px * 2));
+  max-width: calc(800px - (30px * 2));
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 30px;
+  padding-left: 30px
+}
+
+@media screen and (max-width: 800px) {
+  .wrapper {
+    max-width: -webkit-calc(800px - (30px));
+    max-width: calc(800px - (30px));
+    padding-right: 15px;
+    padding-left: 15px
+  }
+}
+
+.wrapper:after,
+.footer-col-wrapper:after {
+  content: "";
+  display: table;
+  clear: both
+}
+
+.svg-icon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  fill: #828282;
+  padding-right: 5px;
+  vertical-align: text-top
+}
+
+.social-media-list li+li {
+  padding-top: 5px
+}
+
+table {
+  margin-bottom: 30px;
+  width: 100%;
+  text-align: left;
+  color: #3f3f3f;
+  border-collapse: collapse;
+  border: 1px solid #e8e8e8
+}
+
+table tr:nth-child(even) {
+  background-color: #f7f7f7
+}
+
+table th,
+table td {
+  padding: 10px 15px
+}
+
+table th {
+  background-color: #f0f0f0;
+  border: 1px solid #dedede;
+  border-bottom-color: #c9c9c9
+}
+
+table td {
+  border: 1px solid #e8e8e8
+}
+
+.site-header {
+  border-top: 5px solid #424242;
+  border-bottom: 1px solid #e8e8e8;
+  min-height: 55.95px;
+  position: relative
+}
+
+.site-title {
+  font-size: 26px;
+  font-weight: 300;
+  line-height: 54px;
+  letter-spacing: -1px;
+  margin-bottom: 0;
+  float: left
+}
+
+.site-title,
+.site-title:visited {
+  color: #424242
+}
+
+.site-nav {
+  float: right;
+  line-height: 54px
+}
+
+.site-nav .nav-trigger {
+  display: none
+}
+
+.site-nav .menu-icon {
+  display: none
+}
+
+.site-nav .page-link {
+  color: #111;
+  line-height: 1.5
+}
+
+.site-nav .page-link:not(:last-child) {
+  margin-right: 20px
+}
+
+@media screen and (max-width: 600px) {
+  .site-nav {
+    position: absolute;
+    top: 9px;
+    right: 15px;
+    background-color: #fdfdfd;
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
+    text-align: right
+  }
+
+  .site-nav label[for="nav-trigger"] {
+    display: block;
+    float: right;
+    width: 36px;
+    height: 36px;
+    z-index: 2;
+    cursor: pointer
+  }
+
+  .site-nav .menu-icon {
+    display: block;
+    float: right;
+    width: 36px;
+    height: 26px;
+    line-height: 0;
+    padding-top: 10px;
+    text-align: center
+  }
+
+  .site-nav .menu-icon>svg {
+    fill: #424242
+  }
+
+  .site-nav input~.trigger {
+    clear: both;
+    display: none
+  }
+
+  .site-nav input:checked~.trigger {
+    display: block;
+    padding-bottom: 5px
+  }
+
+  .site-nav .page-link {
+    display: block;
+    padding: 5px 10px;
+    margin-left: 20px
+  }
+
+  .site-nav .page-link:not(:last-child) {
+    margin-right: 0
+  }
+}
+
+.site-footer {
+  border-top: 1px solid #e8e8e8;
+  padding: 30px 0
+}
+
+.footer-heading {
+  font-size: 18px;
+  margin-bottom: 15px
+}
+
+.contact-list,
+.social-media-list {
+  list-style: none;
+  margin-left: 0
+}
+
+.footer-col-wrapper {
+  font-size: 15px;
+  color: #828282;
+  margin-left: -15px
+}
+
+.footer-col {
+  float: left;
+  margin-bottom: 15px;
+  padding-left: 15px
+}
+
+.footer-col-1 {
+  width: -webkit-calc(35% - (30px / 2));
+  width: calc(35% - (30px / 2))
+}
+
+.footer-col-2 {
+  width: -webkit-calc(20% - (30px / 2));
+  width: calc(20% - (30px / 2))
+}
+
+.footer-col-3 {
+  width: -webkit-calc(45% - (30px / 2));
+  width: calc(45% - (30px / 2))
+}
+
+@media screen and (max-width: 800px) {
+
+  .footer-col-1,
+  .footer-col-2 {
+    width: -webkit-calc(50% - (30px / 2));
+    width: calc(50% - (30px / 2))
+  }
+
+  .footer-col-3 {
+    width: -webkit-calc(100% - (30px / 2));
+    width: calc(100% - (30px / 2))
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .footer-col {
+    float: none;
+    width: -webkit-calc(100% - (30px / 2));
+    width: calc(100% - (30px / 2))
+  }
+}
+
+.page-content {
+  padding: 30px 0;
+  flex: 1
+}
+
+.page-heading {
+  font-size: 32px
+}
+
+.post-list-heading {
+  font-size: 28px
+}
+
+.post-list {
+  margin-left: 0;
+  list-style: none
+}
+
+.post-list>li {
+  margin-bottom: 30px
+}
+
+.post-meta {
+  font-size: 14px;
+  color: #828282
+}
+
+.post-link {
+  display: block;
+  font-size: 24px
+}
+
+.post-header {
+  margin-bottom: 30px
+}
+
+.post-title {
+  font-size: 42px;
+  letter-spacing: -1px;
+  line-height: 1
+}
+
+@media screen and (max-width: 800px) {
+  .post-title {
+    font-size: 36px
+  }
+}
+
+.post-content {
+  margin-bottom: 30px
+}
+
+.post-content h2 {
+  font-size: 32px
+}
+
+@media screen and (max-width: 800px) {
+  .post-content h2 {
+    font-size: 28px
+  }
+}
+
+.post-content h3 {
+  font-size: 26px
+}
+
+@media screen and (max-width: 800px) {
+  .post-content h3 {
+    font-size: 22px
+  }
+}
+
+.post-content h4 {
+  font-size: 20px
+}
+
+@media screen and (max-width: 800px) {
+  .post-content h4 {
+    font-size: 18px
+  }
+}
+
+.highlight {
+  background: #fff
+}
+
+.highlighter-rouge .highlight {
+  background: #eef
+}
+
+.highlight .c {
+  color: #998;
+  font-style: italic
+}
+
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2
+}
+
+.highlight .k {
+  font-weight: bold
+}
+
+.highlight .o {
+  font-weight: bold
+}
+
+.highlight .cm {
+  color: #998;
+  font-style: italic
+}
+
+.highlight .cp {
+  color: #999;
+  font-weight: bold
+}
+
+.highlight .c1 {
+  color: #998;
+  font-style: italic
+}
+
+.highlight .cs {
+  color: #999;
+  font-weight: bold;
+  font-style: italic
+}
+
+.highlight .gd {
+  color: #000;
+  background-color: #fdd
+}
+
+.highlight .gd .x {
+  color: #000;
+  background-color: #faa
+}
+
+.highlight .ge {
+  font-style: italic
+}
+
+.highlight .gr {
+  color: #a00
+}
+
+.highlight .gh {
+  color: #999
+}
+
+.highlight .gi {
+  color: #000;
+  background-color: #dfd
+}
+
+.highlight .gi .x {
+  color: #000;
+  background-color: #afa
+}
+
+.highlight .go {
+  color: #888
+}
+
+.highlight .gp {
+  color: #555
+}
+
+.highlight .gs {
+  font-weight: bold
+}
+
+.highlight .gu {
+  color: #aaa
+}
+
+.highlight .gt {
+  color: #a00
+}
+
+.highlight .kc {
+  font-weight: bold
+}
+
+.highlight .kd {
+  font-weight: bold
+}
+
+.highlight .kp {
+  font-weight: bold
+}
+
+.highlight .kr {
+  font-weight: bold
+}
+
+.highlight .kt {
+  color: #458;
+  font-weight: bold
+}
+
+.highlight .m {
+  color: #099
+}
+
+.highlight .s {
+  color: #d14
+}
+
+.highlight .na {
+  color: teal
+}
+
+.highlight .nb {
+  color: #0086B3
+}
+
+.highlight .nc {
+  color: #458;
+  font-weight: bold
+}
+
+.highlight .no {
+  color: teal
+}
+
+.highlight .ni {
+  color: purple
+}
+
+.highlight .ne {
+  color: #900;
+  font-weight: bold
+}
+
+.highlight .nf {
+  color: #900;
+  font-weight: bold
+}
+
+.highlight .nn {
+  color: #555
+}
+
+.highlight .nt {
+  color: navy
+}
+
+.highlight .nv {
+  color: teal
+}
+
+.highlight .ow {
+  font-weight: bold
+}
+
+.highlight .w {
+  color: #bbb
+}
+
+.highlight .mf {
+  color: #099
+}
+
+.highlight .mh {
+  color: #099
+}
+
+.highlight .mi {
+  color: #099
+}
+
+.highlight .mo {
+  color: #099
+}
+
+.highlight .sb {
+  color: #d14
+}
+
+.highlight .sc {
+  color: #d14
+}
+
+.highlight .sd {
+  color: #d14
+}
+
+.highlight .s2 {
+  color: #d14
+}
+
+.highlight .se {
+  color: #d14
+}
+
+.highlight .sh {
+  color: #d14
+}
+
+.highlight .si {
+  color: #d14
+}
+
+.highlight .sx {
+  color: #d14
+}
+
+.highlight .sr {
+  color: #009926
+}
+
+.highlight .s1 {
+  color: #d14
+}
+
+.highlight .ss {
+  color: #990073
+}
+
+.highlight .bp {
+  color: #999
+}
+
+.highlight .vc {
+  color: teal
+}
+
+.highlight .vg {
+  color: teal
+}
+
+.highlight .vi {
+  color: teal
+}
+
+.highlight .il {
+  color: #099
+}
+
+@font-face {
+  font-family: 'icons';
+  src: url("/assets/icons.woff?8954421") format("woff");
+  font-weight: normal;
+  font-style: normal
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "icons";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  opacity: .8;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  margin-left: .2em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale
+}
+
+.icon-github-circled:before {
+  content: '\f09b'
+}
+
+.icon-mail-squared:before {
+  content: '\f199'
+}
+
+#setunws.original svg * {
+  font-size: 0.9em
+}
+
+#setunws.original svg {
+  overflow: visible;
+  display: block;
+  margin: 0 0 10px 0;
+  font-size: 1em;
+  font-family: Monaco, Consolas, "Liberation Mono", Courier, monospace;
+  background: #f7f7f7;
+  border-radius: 5px;
+  width: 100% !important;
+  height: 100% !important
+}
+
+#setunws.original svg text {
+  text-anchor: middle
+}
+
+#setunws.original .bulb circle {
+  fill: #ccc;
+  stroke: #000;
+  stroke-width: 1
+}
+
+#setunws.original .bulb ellipse {
+  fill: #f2f3f7;
+  stroke: #555;
+  stroke-width: 1
+}
+
+#setunws.original .indicator[value="+"] .bulb:first-child .glass {
+  fill: #ff0
+}
+
+#setunws.original .indicator[value="-"] .bulb .glass {
+  fill: #ff0
+}
+
+#setunws.original .indicator[value="-"] .bulb:first-child .glass {
+  fill: #f2f3f7
+}
+
+#setunws.original .indicator text {
+  fill: #555;
+  font-size: 0.8em;
+  text-anchor: middle
+}
+
+#setunws.original .register>text {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-anchor: end
+}
+
+#setunws.original .switcher {
+  cursor: pointer
+}
+
+#setunws.original .switcher .place {
+  fill: #eee;
+  stroke: #000;
+  stroke-width: 0.5
+}
+
+#setunws.original .switcher .position {
+  opacity: 0
+}
+
+#setunws.original .switcher .position circle {
+  fill: #999;
+  stroke: #000
+}
+
+#setunws.original .switcher .position ellipse {
+  fill: #ccc;
+  stroke: #333
+}
+
+#setunws.original .switcher .position polyline {
+  fill: #999;
+  stroke: #000;
+  stroke-width: 1
+}
+
+#setunws.original .switcher .position[name="0"] ellipse {
+  fill: #ccc
+}
+
+#setunws.original .switcher .position[name="-"] circle {
+  fill: #ccc
+}
+
+#setunws.original .switcher .position[name="-"] ellipse {
+  fill: #999
+}
+
+#setunws.original .switcher .position[name="-"] polyline {
+  fill: #ccc
+}
+
+#setunws.original .switcher .position[name="0"] {
+  opacity: 1
+}
+
+#setunws.original .switcher[value="+"] .position[name="+"] {
+  opacity: 1
+}
+
+#setunws.original .switcher[value="+"] .position[name="0"] {
+  opacity: 0
+}
+
+#setunws.original .switcher[value="-"] .position[name="-"] {
+  opacity: 1
+}
+
+#setunws.original .switcher[value="-"] .position[name="0"] {
+  opacity: 0
+}
+
+#setunws.original .switcher-set>text {
+  text-anchor: start
+}
+
+#setunws.original .modeswitcher[value="+"] .position[name="+"] {
+  opacity: 1
+}
+
+#setunws.original .modeswitcher[value="+"] .position[name="0"] {
+  opacity: 0
+}
+
+#setunws.original .modeswitcher[value="-"] .position[name="-"] {
+  opacity: 1
+}
+
+#setunws.original .modeswitcher[value="-"] .position[name="0"] {
+  opacity: 0
+}
+
+#setunws.original .modeswitcher[value="+"] .bulb ellipse {
+  fill: #ff0
+}
+
+#setunws.original .switcher text {
+  text-anchor: middle
+}
+
+#setunws.original .bi-switcher[value="+"] .bulb ellipse {
+  fill: #ff0
+}
+
+#setunws.original .tri-switcher .bulb {
+  cursor: auto
+}
+
+#setunws.original .tri-switcher[value="-"] .bulb[value="-"] ellipse {
+  fill: #ff0
+}
+
+#setunws.original .tri-switcher[value="+"] .bulb[value="+"] ellipse {
+  fill: #ff0
+}
+
+#setunws.original .tri-switcher text {
+  text-anchor: middle
+}
+
+#setunws.original .button circle {
+  fill: #e00;
+  stroke: #555;
+  stroke-width: 3;
+  cursor: pointer
+}
+
+#setunws.original .button[disabled=disabled] circle {
+  fill: #900;
+  cursor: auto
+}
+
+#setunws.original .button text {
+  text-anchor: middle
+}
+
+#setunws.original .clock circle {
+  stroke: #555;
+  stroke-width: 1;
+  fill: #fff
+}
+
+#setunws.original .clock .border {
+  fill: #fff
+}
+
+#setunws.original .clock text {
+  dominant-baseline: middle
+}
+
+#setunws.original .clock polyline {
+  fill: #333;
+  stroke-width: 1;
+  stroke: #555
+}
+
+#setunws.original log {
+  display: block;
+  overflow: auto;
+  margin: 0 0 10px;
+  padding: 0.5em;
+  height: 5em;
+  width: 100%;
+  border: 1px solid #ccc;
+  font-family: "courier new";
+  float: left
+}
+
+#setunws.original log success {
+  color: #090
+}
+
+#setunws.original log faild {
+  color: #d00
+}
+
+#setunws.original hr {
+  clear: both;
+  display: block;
+  margin: 0 0 1em 0;
+  border: 0;
+  border-bottom: solid 1px #999
+}
+
+#setunws.original control {
+  display: block;
+  margin: 0 0 1em 0
+}
+
+#setunws.original control button {
+  width: 12em
+}
+
+#setunws.original label {
+  display: block;
+  text-align: center;
+  padding: 0.3em 0;
+  background: #f0f0f0
+}
+
+#setunws.original memory,
+#setunws.original .printer,
+#setunws.original console {
+  display: block;
+  float: left;
+  margin: 0 1em 1em 0;
+  padding: 0 0 0.5em;
+  border: solid 1px #ccc;
+  border-radius: 5px
+}
+
+#setunws.original memory {
+  clear: both
+}
+
+#setunws.original memory bank {
+  display: block;
+  float: left;
+  overflow: hidden;
+  overflow-y: scroll;
+  margin: 0 1em 0 0;
+  padding: 0 0.5em 0 0;
+  height: 10em
+}
+
+#setunws.original memory bank:last-child {
+  margin: 0
+}
+
+#setunws.original memory cell {
+  display: table-row;
+  font-family: monospace;
+  letter-spacing: 0.1em
+}
+
+#setunws.original memory cell label {
+  display: table-cell;
+  padding: 0;
+  width: 4em;
+  background: none
+}
+
+#setunws.original memory cell input {
+  display: table-cell;
+  width: 8em;
+  border: 1px dotted #ccc;
+  background: transparent;
+  letter-spacing: 0.1em;
+  text-align: center;
+  border-radius: 2px
+}
+
+#setunws.original ft {
+  display: block;
+  float: left;
+  font-size: 0.8em;
+  margin: 0 1em 0 0
+}
+
+#setunws.original ft label {
+  display: block;
+  margin: 0 0 5px;
+  width: 10em;
+  text-align: center
+}
+
+#setunws.original ft device,
+#setunws.original ft textarea {
+  display: block;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding: 0 0 0 0.3em;
+  width: 11em;
+  font-family: "lucida console", monospace;
+  letter-spacing: 0.3em;
+  font-size: 1em;
+  border: solid 1px #ccc
+}
+
+#setunws.original ft device {
+  height: 10em
+}
+
+#setunws.original ft textarea {
+  margin: 0 0 5px;
+  height: 150px;
+  border-radius: 3px
+}
+
+#setunws.original ft button {
+  font-size: .8rem;
+  height: 2.8rem;
+  line-height: 2.8rem;
+  padding: 0 1.5rem
+}
+
+#setunws.original .output {
+  display: block;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding: 0.5em;
+  width: 100px;
+  height: 150px
+}
+
+#setunws.original console .output {
+  width: 22em
+}
+
+#setunws {
+  display: block
+}
+
+#setunws a {
+  text-decoration: none;
+  border-bottom: 1px solid #369
+}
+
+#setunws textarea {
+  font-family: monospace;
+  font-size: 8pt;
+  width: 180px;
+  height: 240px;
+  border: 1px solid #777;
+  padding: 0 0 0 4px
+}
+
+#setunws .control {
+  margin: 0 0 10px
+}
+
+#setunws .control a {
+  margin: 0 10px 0 0;
+  text-decoration: none;
+  color: #039;
+  border-bottom: 1px solid #039
+}
+
+#setunws .registers {
+  float: left;
+  margin: 0 20px 0 0
+}
+
+#setunws .registers ul {
+  list-style: none;
+  padding: 0 4px
+}
+
+#setunws .registers li * {
+  font-family: monospace
+}
+
+#setunws .memory {
+  clear: both;
+  overflow: hidden;
+  width: 600px
+}
+
+#setunws .bank {
+  float: left;
+  overflow: hidden;
+  overflow-y: scroll;
+  margin: 0;
+  padding: 0 4px;
+  width: 190px;
+  height: 150px;
+  border: 1px solid #ccc;
+  list-style: none
+}
+
+#setunws .bank * {
+  font-family: monospace
+}
+
+#setunws .bank dfn {
+  color: #777
+}
+
+#setunws .bank .non {
+  padding: 0 0 0 15px
+}
+
+#setunws .printer {
+  float: left;
+  margin: 0 20px 0 0
+}
+
+#setunws .printer .output {
+  width: 150px;
+  height: 100px;
+  overflow: hidden;
+  overflow-y: scroll;
+  border: 1px solid #ccc
+}
+
+#setunws .ft {
+  float: left;
+  margin: 0 10px 0 0
+}
+
+#setunws .ft textarea {
+  padding: 2px;
+  width: 110px;
+  height: 100px
+}
+
+#setunws .ft button {
+  display: block
+}
+
+#setunws .console {
+  font-family: monospace;
+  white-space: pre;
+  width: 600px;
+  height: 140px;
+  overflow: auto;
+  overflow-x: scroll;
+  border: 1px solid #ccc
+}
+
+.calendar td,
+.calendar td {
+  border: none
+}
+
+.calendar .year {
+  color: #f50
+}
+
+.calendar .month-name {
+  padding-left: 7px;
+  text-align: left;
+  color: #888a85
+}
+
+.calendar .day {
+  text-align: right;
+  font-size: 12px;
+  font-family: Menlo, DejaVu Sans Mono, Courier New, monospace;
+  padding: 2px 7px
+}
+
+.calendar .day-names .day {
+  color: #888a85;
+  font-family: inherit;
+  font-size: 11px;
+  padding: 2px 0;
+  text-align: center
+}
+
+.calendar .holyday,
+.calendar .holyday {
+  color: #FF4A08
+}
+
+.calendar .highlight,
+.calendar .highlight {
+  background: #FF4A08;
+  border-radius: 2px;
+  color: #fff
+}
+
+.calendar .calendar-month {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 20px 20px 0
+}
+
+.calendar.nonary .day,
+.calendar.nonary .year {
+  text-transform: uppercase
+}
+
+.calendar.nonary .day-names .day {
+  text-transform: none
+}
+
+.calendar.trinary.triangle {
+  line-height: 0
+}
+
+.calendar.trinary.triangle .day {
+  width: 40px;
+  padding: 0;
+  text-align: right
+}
+
+.calendar.trinary.triangle .sign-view {
+  font-size: 0px;
+  display: inline-block;
+  vertical-align: top
+}
+
+.calendar.trinary.triangle .sign-view.zero {
+  font-size: 0;
+  padding: 0
+}
+
+.calendar.trinary.triangle .sign-view.minus {
+  border: 0;
+  border-left: 10px solid #1393FF;
+  border-top: 10px solid #D4ECFF
+}
+
+.calendar.trinary.triangle .sign-view.plus {
+  border: 0;
+  border-right: 10px solid #1393FF;
+  border-bottom: 10px solid #D4ECFF
+}
+
+.calendar.trinary.triangle .year .sign-view {
+  line-height: 0;
+  border-top-width: 45px;
+  border-left-width: 45px
+}
+
+.calendar.trinary.triangle .year .sign-view.minus {
+  border-left-width: 45px;
+  border-top-width: 45px
+}
+
+.calendar.trinary.triangle .year .sign-view.plus {
+  border-right-width: 45px;
+  border-bottom-width: 45px
+}
+
+.calendar.trinary.triangle .calendar-month {
+  margin: 0 30% 0 0
+}
+
+.calendar.trinary.triangle .month-name {
+  margin: 0 0 10px;
+  display: none
+}
+
+.calendar.trinary.triangle .day.holyday .sign-view.minus {
+  border-color: #DEC1E8;
+  border-left: 10px solid #AE06E8
+}
+
+.calendar.trinary.triangle .day.holyday .sign-view.plus {
+  border-color: #DEC1E8;
+  border-right-color: #AE06E8
+}
+
+.calendar.trinary.triangle .day.holyday .sign-view.zero {
+  border-color: #DEC1E8
+}
+
+.calendar.trinary.triangle .day-names {
+  display: none;
+  line-height: 14px
+}
+
+body {
+  font-family: Ubuntu, SF Pro Text, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif
+}
+
+.site-title:hover {
+  text-decoration: none
+}
+
+.site-title .site-logo {
+  display: inline-block;
+  margin: 0 0.5rem 0 -0.5rem;
+  vertical-align: middle
+}
+
+.site-header {
+  border-top-color: #3A0897;
+  border-bottom-color: #E0609A
+}
+
+.site-navigation {
+  float: right;
+  line-height: 56px
+}
+
+.site-navigation .page-link {
+  color: #111;
+  line-height: 1.5
+}
+
+.site-navigation .page-link:not(:last-child) {
+  margin-right: 20px
+}
+
+.post-title {
+  font-weight: 300
+}
+
+.social-media-list {
+  white-space: nowrap
+}
+
+.footer-columns {
+  display: flex;
+  justify-content: space-between
+}
+
+.sidebar {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 4px
+}
+
+.input-group {
+  margin: 0.25rem 0
+}
+
+@media all and (min-width: 40rem) {
+  .machine-translator .form-label {
+    flex: 0 0 33%;
+    max-width: 33%;
+    padding: 0
+  }
+
+  .machine-translator .form-control {
+    flex: 0 0 66%;
+    max-width: 66%
+  }
+}
+
+.application-thencoder .tr-form {
+  margin: 0 0 20px
+}
+
+.application-thencoder .tr-form .form-control {
+  height: 10em;
+  margin-bottom: 10px
+}
+
+.application-thencoder .encoded-results {
+  display: none
+}
+
+.application-thencoder .tr-diagram-header {
+  font-size: 14px;
+  font-weight: 300;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 10px 0
+}
+
+.application-thencoder .tr-diagram {
+  overflow: hidden;
+  width: 100%;
+  height: 300px;
+  padding: 0;
+  cursor: pointer
+}
+
+.application-thencoder .tr-diagram svg {
+  width: 100% !important
+}
+
+.application-thencoder .tr-diagram line {
+  stroke: #333;
+  stroke-width: 1
+}
+
+.application-thencoder .tr-diagram text {
+  font-family: sans-serif;
+  font-size: 12px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  text-transform: uppercase;
+  fill: #fff
+}
+
+.application-thencoder .tr-diagram circle {
+  fill: #369;
+  stroke-width: 1;
+  stroke: #000
+}
+
+.application-thencoder .tr-diagram .node circle {
+  fill: #ddd;
+  stroke: #333
+}
+
+.application-thencoder .tr-diagram .node text {
+  fill: #333;
+  font-size: 10px
+}
+
+.application-thencoder .tr-diagram .garden .grid {
+  stroke: #ccc;
+  stroke-dasharray: 1, 3
+}
+
+.calendar-params {
+  margin: 0 0 2rem
+}
+
+.calendar-params select {
+  width: auto
+}
+
+.tr-sidebar-section {
+  margin: 0 0 30px
+}
+
+.tr-sidebar-section .tr-sidebar-section-header {
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: 400
+}
+
+.machine-translator.translator-lite .input-group {
+  display: flex;
+  flex-wrap: nowrap
+}
+
+.machine-translator.translator-lite .translator-label {
+  font-weight: 400;
+  line-height: 2.5em;
+  width: 5rem
+}
+
+.machine-translator.translator-lite .form-control {
+  width: 100%
+}

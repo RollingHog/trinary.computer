@@ -1,0 +1,160 @@
+<!-- TODO this is for local dev/testing, remove before merge -->
+<!DOCTYPE html>
+<html lang="ru"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Сетунь ВС — эмулятор первой троичной советской ЭВМ</title>
+  <meta name="description" content="Эмулятор первой троичной советской МЦВМ «Сетунь»">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.3.0/milligram.min.css">
+  <link rel="stylesheet" href="./assets/compiled.css">
+  <!-- TODO: this is my CSS additions -->
+  <link rel="stylesheet" href="./assets/my.css">
+  <link rel="canonical" href="https://trinary.computer/projects/setunws/">
+  <link rel="alternate" type="application/rss+xml" title="Trinary" href="/feed.xml">
+  <link rel="shortcut icon" type="image/png" href="/assets/favicon.png">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Сетунь ВС — эмулятор первой троичной советской ЭВМ | Trinary</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Сетунь ВС — эмулятор первой троичной советской ЭВМ" />
+<meta property="og:locale" content="ru" />
+<meta name="description" content="Эмулятор первой троичной советской МЦВМ «Сетунь»" />
+<meta property="og:description" content="Эмулятор первой троичной советской МЦВМ «Сетунь»" />
+<link rel="canonical" href="https://trinary.computer/projects/setunws/" />
+<meta property="og:url" content="https://trinary.computer/projects/setunws/" />
+<meta property="og:site_name" content="Trinary" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-06-25T19:07:33+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Сетунь ВС — эмулятор первой троичной советской ЭВМ" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2023-06-25T19:07:33+00:00","datePublished":"2023-06-25T19:07:33+00:00","description":"Эмулятор первой троичной советской МЦВМ «Сетунь»","headline":"Сетунь ВС — эмулятор первой троичной советской ЭВМ","mainEntityOfPage":{"@type":"WebPage","@id":"https://trinary.computer/projects/setunws/"},"url":"https://trinary.computer/projects/setunws/"}</script>
+<!-- End Jekyll SEO tag -->
+
+  
+  <!-- <script type="text/javascript" src="/assets/application.js"></script> -->
+
+  <!-- this is nessecary, bcause local jquery is non-standard? so whatever it takes to launch  -->
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/js/jquery_.js"></script>
+  <script src="assets/js/bootstrap.js"></script>
+  <!-- <script src="assets/js/dropdown.js"></script> -->
+  <!-- <script src="assets/js/timeago.jq.js"></script> -->
+
+  <!-- TODO looks unused? remove -->
+  <!-- <script src="assets/js/Sizzle.js"></script> -->
+  <script src="assets/js/svg.js"></script>
+  <script src="assets/js/tri0.js"></script>
+  <script src="assets/js/tri1.js"></script>
+  <!-- <script src="assets/js/tri2.js"></script> -->
+  <!-- <script src="assets/js/tri3_clock.js"></script> -->
+  <!-- <script src="assets/js/tri4.js"></script> -->
+  <script src="assets/js/tri5.js"></script>
+</head>
+<body>
+<header class="site-header" role="banner">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">
+      <svg class="site-logo" width="29" height="29" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M1.41421 0H0L1 1L18 18L19 19L20 20L37 37L38 38V36.5858V20V19V17.5858V1V0H37H20.4142H19H18H1.41421ZM19 0L20 1L37 18L38 19H37H20.4142H19V17.5858V1V0ZM2.41421 1L18 16.5858V1H2.41421ZM21.4142 1L37 16.5858V1H21.4142ZM37 35.5858L21.4142 20H37V35.5858Z"
+          fill="url(#gr)" />
+        <defs>
+          <linearGradient id="gr" x1="19" y1="0" x2="19" y2="38" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#3A0897" />
+            <stop offset="1" stop-color="#E0609A" />
+          </linearGradient>
+        </defs>
+      </svg>
+
+      Trinary
+    </a>
+
+    <nav class="site-navigation">
+      
+      
+      <a class="page-link" href="/ru/projects/">Проекты</a>
+      
+      
+      
+      <a class="page-link" href="/ru/kb/">База знаний</a>
+      
+      
+    </nav>
+
+  </div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Сетунь ВС</h1>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <ul class="list-unstyled">
+    <li>
+      <!-- TODO -->
+      <a href="content/_ru/static_pages/setunws/quick-start">Быстрый старт</a>
+    </li>
+    <li>
+      <!-- TODO -->
+        <a href="content/_ru/static_pages/setunws/documentation.html">Руководство</a>
+    </li>
+</ul>
+
+<div id="setunwsplaceholder"></div>
+
+<script type="text/javascript">
+    trinary.setunws.power();
+    $('#setunwsplaceholder').append(trinary.setunws.uiss.root);
+    trinary.setunws.run();
+</script>
+  </div>
+
+  
+</article>
+
+      </div>
+    </main>
+<footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-columns">
+      <div class="footer-column">
+        <ul class="contact-list">
+          <li>
+            © 2023 Тринари
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <ul class="social-media-list">
+          
+          <li class="icon icon-github-circled">
+            <a href="https://github.com/trinarygroup">
+              trinarygroup
+            </a>
+          </li>
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <p>Троичная логика и троичная цифровая техника</p>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+
+</html>
